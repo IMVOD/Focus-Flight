@@ -208,64 +208,333 @@ body {
     font-weight: 600;
 }
 
-/* Seat Selection */
-.seat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
+/* Seat Selection - Airplane Interior */
+.airplane-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 20px;
+    padding: 40px 20px;
     margin-bottom: 30px;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.seat-card {
+.airplane-interior {
     background: white;
-    border: 3px solid #e9ecef;
-    border-radius: 16px;
-    padding: 30px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    border-radius: 30px 30px 16px 16px;
+    padding: 30px 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.airplane-interior::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(90deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+    border-radius: 30px 30px 0 0;
+}
+
+.airplane-nose {
     text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+    padding-top: 10px;
+}
+
+.seat-class-section {
+    margin-bottom: 30px;
+    padding: 20px 15px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(248, 249, 250, 0.5) 100%);
     position: relative;
 }
 
-.seat-card:hover:not(.locked) {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+.seat-class-section.locked {
+    opacity: 0.6;
+    pointer-events: none;
 }
 
-.seat-card.selected {
-    border-color: #2a5298;
-    background: linear-gradient(135deg, rgba(30, 60, 114, 0.05) 0%, rgba(42, 82, 152, 0.05) 100%);
-    box-shadow: 0 8px 20px rgba(30, 60, 114, 0.2);
+.seat-class-section.locked::after {
+    content: '🔒 LOCKED';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(220, 53, 69, 0.95);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    z-index: 10;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-.seat-card.locked {
-    opacity: 0.5;
-    cursor: not-allowed;
+.class-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(30, 60, 114, 0.1) 0%, rgba(42, 82, 152, 0.1) 100%);
+    border-radius: 10px;
 }
 
-.seat-icon {
-    font-size: 3.5em;
-    margin-bottom: 15px;
+.class-header.first {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 193, 7, 0.2) 100%);
 }
 
-.seat-name {
-    font-size: 1.4em;
+.class-header.business {
+    background: linear-gradient(135deg, rgba(42, 82, 152, 0.15) 0%, rgba(30, 60, 114, 0.15) 100%);
+}
+
+.class-header.economy {
+    background: linear-gradient(135deg, rgba(108, 117, 125, 0.1) 0%, rgba(73, 80, 87, 0.1) 100%);
+}
+
+.class-title {
+    font-size: 1.5em;
     font-weight: 700;
     color: #1e3c72;
+}
+
+.class-multiplier {
+    background: #28a745;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.seat-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.seat-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 5px 0;
+}
+
+.row-number {
+    width: 30px;
+    text-align: center;
+    font-weight: 700;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.seat-group {
+    display: flex;
+    gap: 8px;
+}
+
+.aisle {
+    width: 40px;
+    min-width: 40px;
+}
+
+.seat {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px 8px 4px 4px;
+    border: 2px solid #dee2e6;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75em;
+    font-weight: 600;
+    color: #666;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.seat.first {
+    width: 55px;
+    height: 55px;
+    font-size: 0.85em;
+    background: linear-gradient(135deg, #fff8e1 0%, #ffeaa7 100%);
+    border-color: #ffc107;
+}
+
+.seat.business {
+    width: 50px;
+    height: 50px;
+    font-size: 0.8em;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-color: #2196f3;
+}
+
+.seat.economy {
+    background: linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%);
+    border-color: #ced4da;
+}
+
+.seat.available:hover {
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border-color: #2a5298;
+}
+
+.seat.selected {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+    border-color: #1e3c72;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(30, 60, 114, 0.4);
+    animation: seatPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes seatPulse {
+    0%, 100% {
+        box-shadow: 0 5px 20px rgba(30, 60, 114, 0.4);
+    }
+    50% {
+        box-shadow: 0 5px 30px rgba(30, 60, 114, 0.6);
+    }
+}
+
+.seat.occupied {
+    background: linear-gradient(135deg, #e9ecef 0%, #ced4da 100%);
+    border-color: #adb5bd;
+    cursor: not-allowed;
+    color: #adb5bd;
+}
+
+.seat.occupied::after {
+    content: '✕';
+    position: absolute;
+    font-size: 1.2em;
+    color: #6c757d;
+}
+
+.seat::before {
+    content: attr(data-label);
+    position: absolute;
+    font-size: 0.7em;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.seat-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.85em;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.seat-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.9);
+}
+
+.seat:hover .seat-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.seat-legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(248, 249, 250, 0.5);
+    border-radius: 12px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9em;
+}
+
+.legend-seat {
+    width: 35px;
+    height: 35px;
+    border-radius: 6px 6px 3px 3px;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7em;
+}
+
+.legend-seat.available {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-color: #dee2e6;
+}
+
+.legend-seat.selected {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+    border-color: #1e3c72;
+    color: white;
+}
+
+.legend-seat.occupied {
+    background: linear-gradient(135deg, #e9ecef 0%, #ced4da 100%);
+    border-color: #adb5bd;
+    color: #adb5bd;
+}
+
+.selected-seat-info {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    background: linear-gradient(135deg, rgba(30, 60, 114, 0.1) 0%, rgba(42, 82, 152, 0.1) 100%);
+    border-radius: 12px;
+    border: 2px solid #2a5298;
+}
+
+.selected-seat-info h3 {
+    color: #1e3c72;
+    font-size: 1.3em;
     margin-bottom: 10px;
 }
 
-.seat-multiplier {
-    font-size: 1em;
-    color: #666;
+.selected-seat-info p {
+    color: #495057;
+    font-size: 1.1em;
     font-weight: 600;
 }
 
-.locked-badge {
-    font-size: 0.85em;
-    color: #dc3545;
+.selected-seat-info .seat-perks {
     margin-top: 10px;
-    font-weight: 600;
+    font-size: 0.95em;
+    color: #28a745;
 }
 
 /* Route Selection */
@@ -791,8 +1060,32 @@ body {
 
                 <!-- Step 2: Seat Selection -->
                 <div class="step-content hidden" id="step2Content">
-                    <h2 class="step-title">Choose Your Seat Class</h2>
-                    <div class="seat-grid" id="seatGrid"></div>
+                    <h2 class="step-title">Select Your Seat</h2>
+                    <div class="airplane-container">
+                        <div class="airplane-interior">
+                            <div class="airplane-nose">✈️</div>
+                            <div id="seatMap"></div>
+                            <div class="seat-legend">
+                                <div class="legend-item">
+                                    <div class="legend-seat available"></div>
+                                    <span>Available</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-seat selected"></div>
+                                    <span>Selected</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-seat occupied">✕</div>
+                                    <span>Occupied</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="selectedSeatInfo" class="selected-seat-info" style="display: none;">
+                        <h3>Selected Seat</h3>
+                        <p id="seatDetails"></p>
+                        <div class="seat-perks" id="seatPerks"></div>
+                    </div>
                     <div class="btn-group">
                         <button class="btn btn-secondary" id="backToDuration">Back</button>
                         <button class="btn btn-primary" id="continueToRoutes">Continue to Route Selection</button>
@@ -1055,6 +1348,7 @@ class FocusFlight {
             currentStep: 1,
             selectedDuration: 25,
             selectedSeat: 'economy',
+            selectedSeatLabel: '6A',
             selectedRoute: null
         };
 
@@ -1172,34 +1466,180 @@ class FocusFlight {
     }
 
     renderSeats() {
-        const grid = document.getElementById('seatGrid');
-        grid.innerHTML = '';
+        const seatMap = document.getElementById('seatMap');
+        seatMap.innerHTML = '';
         
-        this.seats.forEach(seat => {
-            const unlocked = this.data.unlockedSeats.includes(seat.id) || this.data.totalMiles >= seat.requirement;
-            const card = document.createElement('div');
-            card.className = `seat-card${!unlocked ? ' locked' : ''}`;
-            if (seat.id === this.session.selectedSeat && unlocked) {
-                card.classList.add('selected');
+        // Define seat configuration for each class
+        const seatConfig = {
+            first: {
+                rows: [1, 2],
+                columns: ['A', 'C', 'D', 'F'],
+                perks: ['Extra legroom', 'Premium meals', '2x miles'],
+                multiplier: 2,
+                requirement: 500
+            },
+            business: {
+                rows: [3, 4, 5],
+                columns: ['A', 'B', 'C', 'D', 'E', 'F'],
+                perks: ['Priority boarding', 'Lounge access', '1.5x miles'],
+                multiplier: 1.5,
+                requirement: 0
+            },
+            economy: {
+                rows: [6, 7, 8, 9, 10],
+                columns: ['A', 'B', 'C', 'D', 'E', 'F'],
+                perks: ['Standard service', '1x miles'],
+                multiplier: 1,
+                requirement: 0
             }
+        };
+        
+        // Generate random occupied seats (for realism)
+        const occupiedSeats = this.generateOccupiedSeats();
+        
+        // Render each class section
+        ['first', 'business', 'economy'].forEach(classType => {
+            const config = seatConfig[classType];
+            const unlocked = this.data.totalMiles >= config.requirement;
             
-            card.innerHTML = `
-                <div class="seat-icon">${seat.icon}</div>
-                <div class="seat-name">${seat.name}</div>
-                <div class="seat-multiplier">${seat.multiplier}x Miles</div>
-                ${!unlocked ? `<div class="locked-badge">🔒 ${seat.requirement} miles required</div>` : ''}
+            const section = document.createElement('div');
+            section.className = `seat-class-section ${classType}${!unlocked ? ' locked' : ''}`;
+            
+            const header = document.createElement('div');
+            header.className = `class-header ${classType}`;
+            header.innerHTML = `
+                <span class="class-title">${classType === 'first' ? '👑 First Class' : classType === 'business' ? '🛋️ Business Class' : '💺 Economy Class'}</span>
+                <span class="class-multiplier">${config.multiplier}x Miles</span>
+                ${!unlocked ? `<span style="margin-left: auto; color: #dc3545; font-weight: 700;">🔒 ${config.requirement} miles required</span>` : ''}
             `;
+            section.appendChild(header);
             
-            if (unlocked) {
-                card.addEventListener('click', () => {
-                    this.session.selectedSeat = seat.id;
-                    document.querySelectorAll('.seat-card').forEach(c => c.classList.remove('selected'));
-                    card.classList.add('selected');
+            const rows = document.createElement('div');
+            rows.className = 'seat-rows';
+            
+            config.rows.forEach(rowNum => {
+                const row = document.createElement('div');
+                row.className = 'seat-row';
+                
+                // Row number
+                const rowLabel = document.createElement('div');
+                rowLabel.className = 'row-number';
+                rowLabel.textContent = rowNum;
+                row.appendChild(rowLabel);
+                
+                // Left seats
+                const leftGroup = document.createElement('div');
+                leftGroup.className = 'seat-group';
+                config.columns.slice(0, Math.floor(config.columns.length / 2)).forEach(col => {
+                    const seat = this.createSeat(rowNum, col, classType, config, occupiedSeats, unlocked);
+                    leftGroup.appendChild(seat);
                 });
-            }
+                row.appendChild(leftGroup);
+                
+                // Aisle
+                const aisle = document.createElement('div');
+                aisle.className = 'aisle';
+                row.appendChild(aisle);
+                
+                // Right seats
+                const rightGroup = document.createElement('div');
+                rightGroup.className = 'seat-group';
+                config.columns.slice(Math.floor(config.columns.length / 2)).forEach(col => {
+                    const seat = this.createSeat(rowNum, col, classType, config, occupiedSeats, unlocked);
+                    rightGroup.appendChild(seat);
+                });
+                row.appendChild(rightGroup);
+                
+                rows.appendChild(row);
+            });
             
-            grid.appendChild(card);
+            section.appendChild(rows);
+            seatMap.appendChild(section);
         });
+    }
+    
+    generateOccupiedSeats() {
+        // Generate a realistic distribution of occupied seats
+        const occupied = new Set();
+        const occupancyRate = 0.3; // 30% of seats occupied
+        
+        for (let row = 1; row <= 10; row++) {
+            ['A', 'B', 'C', 'D', 'E', 'F'].forEach(col => {
+                if (Math.random() < occupancyRate) {
+                    occupied.add(`${row}${col}`);
+                }
+            });
+        }
+        
+        return occupied;
+    }
+    
+    createSeat(row, col, classType, config, occupiedSeats, unlocked) {
+        const seatLabel = `${row}${col}`;
+        const isOccupied = occupiedSeats.has(seatLabel);
+        const isSelected = this.session.selectedSeatLabel === seatLabel;
+        
+        const seat = document.createElement('div');
+        seat.className = `seat ${classType}`;
+        seat.setAttribute('data-label', seatLabel);
+        seat.setAttribute('data-class', classType);
+        
+        if (isOccupied) {
+            seat.classList.add('occupied');
+        } else if (unlocked) {
+            seat.classList.add('available');
+            if (isSelected) {
+                seat.classList.add('selected');
+            }
+        } else {
+            seat.classList.add('occupied');
+        }
+        
+        // Add tooltip
+        if (!isOccupied && unlocked) {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'seat-tooltip';
+            tooltip.innerHTML = `
+                <strong>Seat ${seatLabel}</strong><br>
+                ${config.perks.join(' • ')}
+            `;
+            seat.appendChild(tooltip);
+        }
+        
+        // Add click handler
+        if (!isOccupied && unlocked) {
+            seat.addEventListener('click', () => {
+                // Remove previous selection
+                document.querySelectorAll('.seat.selected').forEach(s => s.classList.remove('selected'));
+                
+                // Select this seat
+                seat.classList.add('selected');
+                this.session.selectedSeat = classType;
+                this.session.selectedSeatLabel = seatLabel;
+                
+                // Show selected seat info
+                this.showSelectedSeatInfo(seatLabel, classType, config);
+            });
+        }
+        
+        return seat;
+    }
+    
+    showSelectedSeatInfo(seatLabel, classType, config) {
+        const infoDiv = document.getElementById('selectedSeatInfo');
+        const detailsDiv = document.getElementById('seatDetails');
+        const perksDiv = document.getElementById('seatPerks');
+        
+        const className = classType === 'first' ? 'First Class' : 
+                         classType === 'business' ? 'Business Class' : 'Economy Class';
+        
+        detailsDiv.textContent = `Seat ${seatLabel} - ${className} (${config.multiplier}x miles)`;
+        perksDiv.innerHTML = `✨ ${config.perks.join(' • ')}`;
+        
+        infoDiv.style.display = 'block';
+        
+        // Smooth scroll to show the info
+        infoDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     renderRoutes() {
