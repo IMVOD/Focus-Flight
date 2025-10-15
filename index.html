@@ -803,6 +803,11 @@ body {
     filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
 }
 
+#mapContent {
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center center;
+}
+
 /* Timer */
 .timer-section {
     margin-bottom: 30px;
@@ -1191,55 +1196,124 @@ body {
                                 <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.3" />
                                 <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0" />
                             </radialGradient>
+                            <clipPath id="globeClip">
+                                <circle cx="400" cy="250" r="220"/>
+                            </clipPath>
                         </defs>
                         
-                        <!-- Globe sphere -->
+                        <!-- Background circle -->
                         <circle cx="400" cy="250" r="220" fill="url(#globeGradient)" />
-                        <circle cx="400" cy="250" r="220" fill="url(#globeHighlight)" />
                         
-                        <!-- Latitude lines -->
-                        <ellipse cx="400" cy="250" rx="220" ry="220" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <ellipse cx="400" cy="250" rx="220" ry="110" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <ellipse cx="400" cy="250" rx="220" ry="44" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <line x1="180" y1="250" x2="620" y2="250" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-                        
-                        <!-- Longitude lines -->
-                        <ellipse cx="400" cy="250" rx="110" ry="220" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <ellipse cx="400" cy="250" rx="44" ry="220" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <line x1="400" y1="30" x2="400" y2="470" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-                        
-                        <!-- Continental outlines (simplified) -->
-                        <g id="continents" fill="#3d7e3d" opacity="0.7">
-                            <!-- North America (simplified) -->
-                            <path d="M 180,120 Q 220,100 260,110 Q 300,120 320,140 Q 340,160 350,180 Q 360,200 350,220 Q 340,240 320,250 Q 300,260 280,270 Q 260,280 240,280 Q 220,280 200,270 Q 180,260 170,240 Q 160,220 165,200 Q 170,180 175,160 Q 180,140 180,120 Z"/>
+                        <!-- Zoomable/Pannable map content group -->
+                        <g id="mapContent" clip-path="url(#globeClip)">
+                            <!-- Latitude lines -->
+                            <g id="gridLines" opacity="0.15">
+                                <ellipse cx="400" cy="250" rx="220" ry="220" fill="none" stroke="rgba(255,255,255,1)" stroke-width="1"/>
+                                <ellipse cx="400" cy="250" rx="220" ry="110" fill="none" stroke="rgba(255,255,255,1)" stroke-width="1"/>
+                                <ellipse cx="400" cy="250" rx="220" ry="44" fill="none" stroke="rgba(255,255,255,1)" stroke-width="1"/>
+                                <line x1="180" y1="250" x2="620" y2="250" stroke="rgba(255,255,255,1)" stroke-width="2"/>
+                                <!-- Longitude lines -->
+                                <ellipse cx="400" cy="250" rx="110" ry="220" fill="none" stroke="rgba(255,255,255,1)" stroke-width="1"/>
+                                <ellipse cx="400" cy="250" rx="44" ry="220" fill="none" stroke="rgba(255,255,255,1)" stroke-width="1"/>
+                                <line x1="400" y1="30" x2="400" y2="470" stroke="rgba(255,255,255,1)" stroke-width="2"/>
+                            </g>
                             
-                            <!-- Europe (simplified) -->
-                            <path d="M 420,130 Q 440,125 455,135 Q 470,145 475,160 Q 480,175 475,190 Q 470,205 455,210 Q 440,215 425,210 Q 410,205 405,190 Q 400,175 405,160 Q 410,145 420,130 Z"/>
+                            <!-- Detailed Continental outlines -->
+                            <g id="continents" fill="#3d7e3d" opacity="0.75" stroke="#2d6e2d" stroke-width="0.5">
+                                <!-- North America - More detailed -->
+                                <path d="M 170,140 L 175,135 L 180,125 L 190,115 L 200,110 L 210,108 L 220,107 L 230,108 L 240,112 L 250,115 L 260,118 L 270,125 L 275,130 L 280,138 L 285,145 L 290,150 L 295,155 L 300,162 L 305,168 L 310,173 L 315,178 L 320,185 L 323,192 L 325,200 L 326,208 L 325,216 L 323,224 L 320,232 L 316,240 L 312,245 L 307,250 L 302,255 L 297,258 L 292,260 L 287,262 L 282,263 L 277,264 L 272,265 L 267,266 L 262,268 L 257,272 L 252,276 L 247,278 L 242,279 L 237,279 L 232,278 L 227,276 L 222,273 L 217,269 L 212,265 L 207,260 L 202,254 L 197,248 L 193,242 L 189,235 L 186,228 L 183,221 L 181,214 L 179,207 L 178,200 L 177,193 L 177,186 L 178,179 L 179,172 L 180,165 L 180,158 L 178,151 L 175,145 L 172,142 Z
+                                     M 200,108 L 205,103 L 212,100 L 220,99 L 228,100 L 235,103 L 242,108 L 248,115 L 252,122 L 255,130 L 256,138 L 256,146 L 254,154 L 251,161 L 248,167 L 244,172 L 240,176 L 235,179 L 230,181 L 225,182 L 220,182 L 215,181 L 210,179 L 206,176 L 203,172 L 201,167 L 200,161 L 200,155 L 201,149 L 203,143 L 205,137 L 207,131 L 208,125 L 207,119 L 205,113 Z"/>
+                                
+                                <!-- Mexico and Central America -->
+                                <path d="M 240,220 L 245,218 L 250,217 L 255,218 L 260,220 L 265,223 L 270,227 L 273,232 L 275,237 L 276,242 L 276,247 L 275,252 L 273,257 L 270,261 L 267,264 L 263,266 L 259,267 L 255,267 L 251,266 L 247,264 L 244,261 L 242,257 L 240,253 L 239,248 L 239,243 L 240,238 L 241,233 L 242,228 Z"/>
+                                
+                                <!-- South America - More detailed -->
+                                <path d="M 285,280 L 290,278 L 295,278 L 300,280 L 305,284 L 309,289 L 312,295 L 314,302 L 315,309 L 316,316 L 316,323 L 316,330 L 315,337 L 314,344 L 312,351 L 310,358 L 307,365 L 304,372 L 300,378 L 296,384 L 292,389 L 287,394 L 282,398 L 277,401 L 272,403 L 267,404 L 262,404 L 257,403 L 252,400 L 248,397 L 244,393 L 241,388 L 238,383 L 236,377 L 235,371 L 234,365 L 234,359 L 235,353 L 236,347 L 238,341 L 240,335 L 243,329 L 246,324 L 249,319 L 253,314 L 257,310 L 261,306 L 265,303 L 269,300 L 273,298 L 277,296 L 281,290 Z"/>
+                                
+                                <!-- Europe - Detailed -->
+                                <path d="M 410,125 L 415,123 L 420,122 L 425,122 L 430,123 L 435,125 L 440,128 L 444,132 L 447,137 L 450,142 L 452,148 L 453,154 L 454,160 L 454,166 L 453,172 L 451,178 L 449,183 L 446,188 L 442,192 L 438,195 L 433,197 L 428,198 L 423,198 L 418,197 L 413,195 L 409,192 L 405,188 L 402,183 L 400,178 L 399,172 L 398,166 L 398,160 L 399,154 L 400,148 L 402,143 L 404,138 L 406,133 L 408,128 Z
+                                     M 425,120 L 430,118 L 435,117 L 440,118 L 445,120 L 449,123 L 452,127 L 454,132 L 455,137 L 455,142 L 454,147 L 452,152 L 449,156 L 446,159 L 442,161 L 438,162 L 433,162 L 429,161 L 425,159 L 422,156 L 420,152 L 419,147 L 419,142 L 420,137 L 421,132 L 423,127 L 424,123 Z"/>
+                                
+                                <!-- Scandinavia -->
+                                <path d="M 440,100 L 443,95 L 446,92 L 450,90 L 454,90 L 458,91 L 462,94 L 465,98 L 467,103 L 468,108 L 468,113 L 467,118 L 465,122 L 462,126 L 458,128 L 454,129 L 450,128 L 446,126 L 443,123 L 441,119 L 440,114 L 440,109 L 440,104 Z"/>
+                                
+                                <!-- Africa - Detailed -->
+                                <path d="M 430,210 L 435,208 L 440,207 L 445,208 L 450,210 L 454,213 L 458,217 L 461,222 L 464,228 L 466,234 L 468,240 L 469,247 L 470,254 L 470,261 L 470,268 L 469,275 L 468,282 L 466,289 L 464,296 L 461,303 L 458,310 L 454,316 L 450,322 L 445,327 L 440,332 L 435,336 L 430,339 L 425,341 L 420,342 L 415,342 L 410,341 L 405,339 L 400,336 L 396,332 L 392,327 L 389,322 L 386,316 L 384,310 L 382,303 L 381,296 L 380,289 L 380,282 L 381,275 L 382,268 L 384,261 L 386,254 L 389,247 L 392,241 L 396,235 L 400,230 L 405,225 L 410,221 L 415,218 L 420,215 L 425,213 Z"/>
+                                
+                                <!-- Madagascar -->
+                                <path d="M 485,320 L 487,318 L 490,317 L 493,318 L 495,320 L 497,323 L 498,327 L 498,331 L 497,335 L 495,338 L 493,340 L 490,341 L 487,341 L 485,340 L 483,338 L 482,335 L 481,331 L 481,327 L 482,323 Z"/>
+                                
+                                <!-- Middle East -->
+                                <path d="M 460,175 L 465,173 L 470,173 L 475,175 L 479,178 L 482,182 L 484,187 L 485,192 L 485,197 L 484,202 L 482,206 L 479,209 L 475,211 L 470,212 L 465,212 L 461,211 L 458,209 L 456,206 L 455,202 L 455,197 L 456,192 L 458,187 L 460,182 Z"/>
+                                
+                                <!-- India -->
+                                <path d="M 510,220 L 515,218 L 520,218 L 524,220 L 527,223 L 529,227 L 530,232 L 530,237 L 529,242 L 527,247 L 524,251 L 520,254 L 515,256 L 510,256 L 506,254 L 503,251 L 501,247 L 500,242 L 500,237 L 501,232 L 503,227 L 506,223 Z"/>
+                                
+                                <!-- Southeast Asia -->
+                                <path d="M 540,235 L 543,233 L 547,233 L 550,235 L 552,238 L 553,242 L 553,246 L 552,250 L 550,253 L 547,255 L 543,256 L 540,256 L 537,255 L 535,253 L 534,250 L 534,246 L 534,242 L 535,238 L 537,236 Z
+                                     M 555,250 L 557,248 L 560,248 L 562,250 L 563,253 L 563,256 L 562,259 L 560,261 L 557,261 L 555,260 L 554,258 L 554,255 L 554,252 Z
+                                     M 548,260 L 550,258 L 553,258 L 555,260 L 556,263 L 556,266 L 555,269 L 553,271 L 550,271 L 548,270 L 547,268 L 547,265 L 547,262 Z"/>
+                                
+                                <!-- Australia -->
+                                <path d="M 580,310 L 590,308 L 600,308 L 608,310 L 615,314 L 620,319 L 624,325 L 626,332 L 627,339 L 626,346 L 624,353 L 620,359 L 615,364 L 608,368 L 600,370 L 590,370 L 582,368 L 575,364 L 570,359 L 566,353 L 563,346 L 562,339 L 563,332 L 566,325 L 570,319 L 575,314 Z"/>
+                                
+                                <!-- New Zealand -->
+                                <path d="M 625,385 L 628,383 L 632,383 L 635,385 L 637,388 L 638,392 L 638,396 L 637,400 L 635,403 L 632,405 L 628,405 L 625,404 L 623,402 L 622,399 L 622,395 L 622,391 L 623,387 Z
+                                     M 628,410 L 630,408 L 633,408 L 635,410 L 636,413 L 636,416 L 635,419 L 633,421 L 630,421 L 628,420 L 627,418 L 627,415 L 627,412 Z"/>
+                                
+                                <!-- Japan -->
+                                <path d="M 605,175 L 608,173 L 612,173 L 615,175 L 617,178 L 618,182 L 618,186 L 617,190 L 615,193 L 612,195 L 608,195 L 605,194 L 603,192 L 602,189 L 602,185 L 602,181 L 603,177 Z
+                                     M 610,158 L 612,156 L 615,156 L 617,158 L 618,161 L 618,164 L 617,167 L 615,169 L 612,169 L 610,168 L 609,166 L 609,163 L 609,160 Z"/>
+                                
+                                <!-- Philippines -->
+                                <path d="M 565,240 L 567,238 L 570,238 L 572,240 L 573,243 L 573,246 L 572,249 L 570,251 L 567,251 L 565,250 L 564,248 L 564,245 L 564,242 Z
+                                     M 568,253 L 570,251 L 572,251 L 574,253 L 575,255 L 575,258 L 574,260 L 572,262 L 570,262 L 568,261 L 567,259 L 567,256 L 567,254 Z"/>
+                                
+                                <!-- UK and Ireland -->
+                                <path d="M 395,128 L 398,126 L 401,126 L 404,128 L 406,131 L 407,135 L 407,139 L 406,143 L 404,146 L 401,148 L 398,148 L 395,147 L 393,145 L 392,142 L 392,138 L 392,134 L 393,130 Z
+                                     M 390,133 L 392,131 L 394,131 L 396,133 L 397,135 L 397,138 L 396,140 L 394,142 L 392,142 L 390,141 L 389,139 L 389,136 L 389,134 Z"/>
+                                
+                                <!-- Iceland -->
+                                <path d="M 378,98 L 380,96 L 383,96 L 385,98 L 386,101 L 386,104 L 385,107 L 383,109 L 380,109 L 378,108 L 377,106 L 377,103 L 377,100 Z"/>
+                                
+                                <!-- Greenland -->
+                                <path d="M 330,55 L 340,52 L 350,52 L 358,55 L 365,60 L 370,67 L 373,75 L 374,84 L 373,93 L 370,101 L 365,108 L 358,113 L 350,116 L 340,116 L 332,113 L 325,108 L 320,101 L 317,93 L 316,84 L 317,75 L 320,67 L 325,60 Z"/>
+                                
+                                <!-- Caribbean Islands -->
+                                <path d="M 280,250 L 282,248 L 284,248 L 286,250 L 287,252 L 287,254 L 286,256 L 284,258 L 282,258 L 280,257 L 279,255 L 279,252 Z
+                                     M 290,248 L 292,246 L 294,246 L 296,248 L 297,250 L 297,252 L 296,254 L 294,256 L 292,256 L 290,255 L 289,253 L 289,250 Z"/>
+                                
+                                <!-- Alaska -->
+                                <path d="M 120,120 L 130,115 L 140,113 L 150,115 L 158,120 L 164,127 L 168,135 L 170,144 L 170,153 L 168,161 L 164,168 L 158,173 L 150,176 L 140,176 L 132,173 L 125,168 L 120,161 L 117,153 L 116,144 L 117,135 L 120,127 Z"/>
+                                
+                                <!-- Hawaii -->
+                                <path d="M 155,260 L 157,258 L 159,258 L 161,260 L 162,262 L 162,264 L 161,266 L 159,268 L 157,268 L 155,267 L 154,265 L 154,262 Z"/>
+                                
+                                <!-- Cuba -->
+                                <path d="M 272,245 L 280,243 L 287,244 L 293,246 L 297,249 L 299,253 L 299,257 L 297,261 L 293,264 L 287,266 L 280,267 L 274,266 L 269,264 L 266,261 L 264,257 L 264,253 L 266,249 L 269,246 Z"/>
+                            </g>
                             
-                            <!-- South America (simplified) -->
-                            <path d="M 300,280 Q 310,300 315,320 Q 320,340 318,360 Q 316,380 308,395 Q 300,410 285,415 Q 270,420 260,410 Q 250,400 245,385 Q 240,370 242,350 Q 244,330 250,310 Q 256,290 270,285 Q 284,280 300,280 Z"/>
+                            <!-- Flight path (will be drawn dynamically) -->
+                            <path id="flightPath" fill="none" stroke="#ffc107" stroke-width="3" stroke-dasharray="10,5" opacity="0.8"/>
                             
-                            <!-- Africa (simplified) -->
-                            <path d="M 440,220 Q 455,240 465,260 Q 475,280 478,300 Q 481,320 475,340 Q 469,360 455,370 Q 441,380 425,375 Q 409,370 400,355 Q 391,340 390,320 Q 389,300 395,280 Q 401,260 410,245 Q 419,230 440,220 Z"/>
+                            <!-- Departure marker -->
+                            <g id="departureMarker">
+                                <circle cx="0" cy="0" r="8" fill="#28a745" stroke="white" stroke-width="2"/>
+                                <text x="0" y="-15" text-anchor="middle" fill="white" font-size="14" font-weight="bold" id="departureLabel">Departure</text>
+                            </g>
+                            
+                            <!-- Arrival marker -->
+                            <g id="arrivalMarker">
+                                <circle cx="0" cy="0" r="8" fill="#dc3545" stroke="white" stroke-width="2"/>
+                                <text x="0" y="-15" text-anchor="middle" fill="white" font-size="14" font-weight="bold" id="arrivalLabel">Arrival</text>
+                            </g>
+                            
+                            <!-- Plane -->
+                            <text id="plane" x="0" y="0" text-anchor="middle" font-size="32" transform="rotate(0)">✈️</text>
                         </g>
                         
-                        <!-- Flight path (will be drawn dynamically) -->
-                        <path id="flightPath" fill="none" stroke="#ffc107" stroke-width="3" stroke-dasharray="10,5" opacity="0.8"/>
-                        
-                        <!-- Departure marker -->
-                        <g id="departureMarker">
-                            <circle cx="0" cy="0" r="8" fill="#28a745" stroke="white" stroke-width="2"/>
-                            <text x="0" y="-15" text-anchor="middle" fill="white" font-size="14" font-weight="bold" id="departureLabel">Departure</text>
-                        </g>
-                        
-                        <!-- Arrival marker -->
-                        <g id="arrivalMarker">
-                            <circle cx="0" cy="0" r="8" fill="#dc3545" stroke="white" stroke-width="2"/>
-                            <text x="0" y="-15" text-anchor="middle" fill="white" font-size="14" font-weight="bold" id="arrivalLabel">Arrival</text>
-                        </g>
-                        
-                        <!-- Plane -->
-                        <text id="plane" x="0" y="0" text-anchor="middle" font-size="32" transform="rotate(0)">✈️</text>
+                        <!-- Globe highlight overlay -->
+                        <circle cx="400" cy="250" r="220" fill="url(#globeHighlight)" pointer-events="none"/>
                     </svg>
                 </div>
 
@@ -2002,18 +2076,104 @@ class FocusFlight {
         arrivalMarker.setAttribute('transform', `translate(${x2}, ${y2})`);
         document.getElementById('arrivalLabel').textContent = route.to;
         
-        // Calculate curved path (arc over globe)
-        const midX = (x1 + x2) / 2;
-        const midY = Math.min(y1, y2) - Math.abs(x2 - x1) * 0.15; // Arc upward
+        // Calculate great-circle path for realistic flight route
+        const flightPath = this.calculateGreatCirclePath(x1, y1, x2, y2);
+        document.getElementById('flightPath').setAttribute('d', flightPath);
         
-        // Create bezier curve path
-        const pathData = `M ${x1},${y1} Q ${midX},${midY} ${x2},${y2}`;
-        document.getElementById('flightPath').setAttribute('d', pathData);
+        // Calculate zoom and pan to focus on route
+        this.animateZoomToRoute(x1, y1, x2, y2);
         
         // Position plane at start
         const plane = document.getElementById('plane');
         plane.setAttribute('x', x1);
         plane.setAttribute('y', y1);
+    }
+    
+    calculateGreatCirclePath(x1, y1, x2, y2) {
+        // Calculate a more realistic curved path simulating great-circle route
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        // Number of segments for smooth curve
+        const segments = Math.max(20, Math.floor(distance / 10));
+        let path = `M ${x1},${y1}`;
+        
+        // Calculate control points for a realistic arc
+        // The arc height depends on the distance
+        const arcHeight = distance * 0.2;
+        
+        // Determine arc direction (upward for eastward flights, adjust for others)
+        const midX = (x1 + x2) / 2;
+        const midY = (y1 + y2) / 2;
+        
+        // Calculate perpendicular offset for arc
+        const perpX = -dy / distance;
+        const perpY = dx / distance;
+        
+        // Create smooth bezier curve with multiple control points for great-circle effect
+        const controlPoints = [];
+        for (let i = 0; i <= segments; i++) {
+            const t = i / segments;
+            
+            // Quadratic interpolation along the path
+            const baseX = x1 + dx * t;
+            const baseY = y1 + dy * t;
+            
+            // Apply sinusoidal arc for great-circle effect
+            const arcOffset = Math.sin(t * Math.PI) * arcHeight;
+            const ptX = baseX + perpX * arcOffset;
+            const ptY = baseY + perpY * arcOffset;
+            
+            controlPoints.push({ x: ptX, y: ptY });
+        }
+        
+        // Create smooth path through control points
+        for (let i = 1; i < controlPoints.length; i++) {
+            path += ` L ${controlPoints[i].x},${controlPoints[i].y}`;
+        }
+        
+        return path;
+    }
+    
+    animateZoomToRoute(x1, y1, x2, y2) {
+        const mapContent = document.getElementById('mapContent');
+        
+        // Calculate bounding box of the route
+        const minX = Math.min(x1, x2);
+        const maxX = Math.max(x1, x2);
+        const minY = Math.min(y1, y2);
+        const maxY = Math.max(y1, y2);
+        
+        // Add padding
+        const padding = 80;
+        const routeWidth = maxX - minX + padding * 2;
+        const routeHeight = maxY - minY + padding * 2;
+        const routeCenterX = (minX + maxX) / 2;
+        const routeCenterY = (minY + maxY) / 2;
+        
+        // Globe viewport dimensions
+        const globeCenterX = 400;
+        const globeCenterY = 250;
+        const viewportWidth = 440; // Diameter of globe
+        const viewportHeight = 440;
+        
+        // Calculate zoom level to fit the route
+        const scaleX = viewportWidth / routeWidth;
+        const scaleY = viewportHeight / routeHeight;
+        const scale = Math.min(scaleX, scaleY, 2.5); // Limit max zoom to 2.5x
+        
+        // Calculate translation to center the route
+        const translateX = (globeCenterX - routeCenterX) * scale;
+        const translateY = (globeCenterY - routeCenterY) * scale;
+        
+        // Apply smooth zoom and pan animation
+        mapContent.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    }
+    
+    resetGlobeZoom() {
+        const mapContent = document.getElementById('mapContent');
+        mapContent.style.transform = 'translate(0, 0) scale(1)';
     }
 
     runTimer() {
@@ -2051,19 +2211,32 @@ class FocusFlight {
         const [x1, y1] = route.departCoords;
         const [x2, y2] = route.arrivalCoords;
         
-        // Calculate position along bezier curve
-        const midX = (x1 + x2) / 2;
-        const midY = Math.min(y1, y2) - Math.abs(x2 - x1) * 0.15;
+        // Calculate position along the great-circle path
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const distance = Math.sqrt(dx * dx + dy * dy);
         
-        // Quadratic Bezier formula
+        // Arc parameters matching the flight path calculation
+        const arcHeight = distance * 0.2;
+        const perpX = -dy / distance;
+        const perpY = dx / distance;
+        
+        // Calculate plane position
         const t = progress;
-        const planeX = (1-t)*(1-t)*x1 + 2*(1-t)*t*midX + t*t*x2;
-        const planeY = (1-t)*(1-t)*y1 + 2*(1-t)*t*midY + t*t*y2;
+        const baseX = x1 + dx * t;
+        const baseY = y1 + dy * t;
+        const arcOffset = Math.sin(t * Math.PI) * arcHeight;
+        const planeX = baseX + perpX * arcOffset;
+        const planeY = baseY + perpY * arcOffset;
         
-        // Calculate angle for plane rotation
+        // Calculate angle for plane rotation based on path tangent
         const nextT = Math.min(t + 0.01, 1);
-        const nextX = (1-nextT)*(1-nextT)*x1 + 2*(1-nextT)*nextT*midX + nextT*nextT*x2;
-        const nextY = (1-nextT)*(1-nextT)*y1 + 2*(1-nextT)*nextT*midY + nextT*nextT*y2;
+        const nextBaseX = x1 + dx * nextT;
+        const nextBaseY = y1 + dy * nextT;
+        const nextArcOffset = Math.sin(nextT * Math.PI) * arcHeight;
+        const nextX = nextBaseX + perpX * nextArcOffset;
+        const nextY = nextBaseY + perpY * nextArcOffset;
+        
         const angle = Math.atan2(nextY - planeY, nextX - planeX) * 180 / Math.PI;
         
         const plane = document.getElementById('plane');
@@ -2090,6 +2263,9 @@ class FocusFlight {
 
     endFlight(completed) {
         clearInterval(this.session.timer);
+        
+        // Reset globe zoom
+        this.resetGlobeZoom();
         
         if (completed) {
             const baseMiles = this.session.duration;
