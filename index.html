@@ -96,6 +96,17 @@ body {
     overflow: hidden;
 }
 
+.booking-steps::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(30, 60, 114, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+}
+
 .step-indicator {
     display: flex;
     justify-content: center;
@@ -147,28 +158,34 @@ body {
 .step-content {
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 0.6s ease forwards;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.step-content:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .step-title {
     font-size: 2em;
     color: #1e3c72;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     text-align: center;
     font-weight: 700;
+}
+
+.step-subtitle {
+    font-size: 1.1em;
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 500;
 }
 
 /* Duration Selection */
 .duration-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 20px;
     margin-bottom: 30px;
 }
@@ -177,22 +194,42 @@ body {
     background: white;
     border: 3px solid #e9ecef;
     border-radius: 16px;
-    padding: 25px;
+    padding: 30px 25px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: center;
     position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .duration-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border-color: #2a5298;
 }
 
 .duration-card.selected {
     border-color: #2a5298;
-    background: linear-gradient(135deg, rgba(30, 60, 114, 0.05) 0%, rgba(42, 82, 152, 0.05) 100%);
-    box-shadow: 0 8px 20px rgba(30, 60, 114, 0.2);
+    background: linear-gradient(135deg, rgba(30, 60, 114, 0.08) 0%, rgba(42, 82, 152, 0.08) 100%);
+    box-shadow: 0 8px 20px rgba(30, 60, 114, 0.3);
+    transform: scale(1.05);
+}
+
+.duration-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #28a745;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1em;
 }
 
 .duration-time {
@@ -543,6 +580,9 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
     margin-bottom: 30px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 10px;
 }
 
 .route-card {
@@ -553,27 +593,32 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .route-card:hover:not(.locked) {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border-color: #2a5298;
 }
 
 .route-card.selected {
     border-color: #2a5298;
-    background: linear-gradient(135deg, rgba(30, 60, 114, 0.05) 0%, rgba(42, 82, 152, 0.05) 100%);
-    box-shadow: 0 8px 20px rgba(30, 60, 114, 0.2);
+    background: linear-gradient(135deg, rgba(30, 60, 114, 0.08) 0%, rgba(42, 82, 152, 0.08) 100%);
+    box-shadow: 0 8px 20px rgba(30, 60, 114, 0.3);
+    transform: translateY(-3px);
 }
 
 .route-card.locked {
     opacity: 0.5;
     cursor: not-allowed;
+    filter: grayscale(0.5);
 }
 
 .route-card.recommended {
     border-color: #ffc107;
-    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 193, 7, 0.05) 100%);
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
 }
 
 .route-card.recommended::before {
@@ -588,6 +633,21 @@ body {
     font-size: 0.75em;
     font-weight: 700;
     letter-spacing: 1px;
+}
+
+.locked-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85em;
+    font-weight: 600;
+    text-align: center;
+    width: calc(100% - 40px);
 }
 
 .route-cities {
@@ -1049,18 +1109,31 @@ body {
                     <div class="step-dot" id="step3Dot">3</div>
                 </div>
 
-                <!-- Step 1: Duration Selection -->
+                <!-- Step 1: Time Selection -->
                 <div class="step-content" id="step1Content">
-                    <h2 class="step-title">Select Your Focus Duration</h2>
+                    <h2 class="step-title">Select Your Focus Time</h2>
+                    <p class="step-subtitle">How long would you like to focus?</p>
                     <div class="duration-grid" id="durationGrid"></div>
                     <div class="btn-group">
+                        <button class="btn btn-primary" id="continueToFlights">Continue to Flight Selection</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Flight Selection -->
+                <div class="step-content hidden" id="step2Content">
+                    <h2 class="step-title">Select Your Flight</h2>
+                    <p class="step-subtitle" id="flightFilterMessage">Showing flights suitable for your selected time</p>
+                    <div class="routes-grid" id="routesGrid"></div>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" id="backToDuration">Back</button>
                         <button class="btn btn-primary" id="continueToSeats">Continue to Seat Selection</button>
                     </div>
                 </div>
 
-                <!-- Step 2: Seat Selection -->
-                <div class="step-content hidden" id="step2Content">
+                <!-- Step 3: Seat Selection -->
+                <div class="step-content hidden" id="step3Content">
                     <h2 class="step-title">Select Your Seat</h2>
+                    <p class="step-subtitle">Choose your preferred cabin class and seat</p>
                     <div class="airplane-container">
                         <div class="airplane-interior">
                             <div class="airplane-nose">✈️</div>
@@ -1087,17 +1160,7 @@ body {
                         <div class="seat-perks" id="seatPerks"></div>
                     </div>
                     <div class="btn-group">
-                        <button class="btn btn-secondary" id="backToDuration">Back</button>
-                        <button class="btn btn-primary" id="continueToRoutes">Continue to Route Selection</button>
-                    </div>
-                </div>
-
-                <!-- Step 3: Route Selection -->
-                <div class="step-content hidden" id="step3Content">
-                    <h2 class="step-title">Select Your Flight Route</h2>
-                    <div class="routes-grid" id="routesGrid"></div>
-                    <div class="btn-group">
-                        <button class="btn btn-secondary" id="backToSeats">Back</button>
+                        <button class="btn btn-secondary" id="backToFlights">Back</button>
                         <button class="btn btn-primary" id="startFlight">Start Your Flight ✈️</button>
                     </div>
                 </div>
@@ -1216,14 +1279,46 @@ body {
     <script>
 // Real-world flight routes with accurate data
 const REAL_ROUTES = {
-    // Short flights (15-25 min realistic)
+    // Ultra-short flights (30-45 min realistic)
+    'mia-fll': {
+        from: 'Miami',
+        to: 'Fort Lauderdale',
+        fromCity: 'miami',
+        toCity: 'fortlauderdale',
+        distance: 42,
+        flightTime: 30,
+        departCoords: [310, 260],
+        arrivalCoords: [315, 257]
+    },
+    'lax-san': {
+        from: 'Los Angeles',
+        to: 'San Diego',
+        fromCity: 'losangeles',
+        toCity: 'sandiego',
+        distance: 180,
+        flightTime: 40,
+        departCoords: [200, 190],
+        arrivalCoords: [195, 205]
+    },
+    'bos-lga': {
+        from: 'Boston',
+        to: 'New York',
+        fromCity: 'boston',
+        toCity: 'newyork',
+        distance: 306,
+        flightTime: 45,
+        departCoords: [320, 155],
+        arrivalCoords: [290, 170]
+    },
+    
+    // Short flights (45-75 min realistic)
     'jfk-bos': { 
         from: 'New York', 
         to: 'Boston', 
         fromCity: 'newyork', 
         toCity: 'boston',
-        distance: 306,  // km
-        flightTime: 65, // minutes (realistic flight time)
+        distance: 306,
+        flightTime: 65,
         departCoords: [290, 170],
         arrivalCoords: [320, 155]
     },
@@ -1237,28 +1332,6 @@ const REAL_ROUTES = {
         departCoords: [200, 190],
         arrivalCoords: [180, 170]
     },
-    'mia-fll': {
-        from: 'Miami',
-        to: 'Fort Lauderdale',
-        fromCity: 'miami',
-        toCity: 'fortlauderdale',
-        distance: 42,
-        flightTime: 30,
-        departCoords: [310, 260],
-        arrivalCoords: [315, 257]
-    },
-    
-    // Medium flights (30-45 min realistic)
-    'ord-dtw': { 
-        from: 'Chicago', 
-        to: 'Detroit', 
-        fromCity: 'chicago', 
-        toCity: 'detroit',
-        distance: 382,
-        flightTime: 75,
-        departCoords: [270, 180],
-        arrivalCoords: [295, 175]
-    },
     'sea-pdx': { 
         from: 'Seattle', 
         to: 'Portland', 
@@ -1268,6 +1341,16 @@ const REAL_ROUTES = {
         flightTime: 55,
         departCoords: [165, 155],
         arrivalCoords: [170, 165]
+    },
+    'ord-dtw': { 
+        from: 'Chicago', 
+        to: 'Detroit', 
+        fromCity: 'chicago', 
+        toCity: 'detroit',
+        distance: 382,
+        flightTime: 75,
+        departCoords: [270, 180],
+        arrivalCoords: [295, 175]
     },
     'dfw-iah': {
         from: 'Dallas',
@@ -1279,8 +1362,70 @@ const REAL_ROUTES = {
         departCoords: [250, 220],
         arrivalCoords: [265, 235]
     },
+    'phx-lax': {
+        from: 'Phoenix',
+        to: 'Los Angeles',
+        fromCity: 'phoenix',
+        toCity: 'losangeles',
+        distance: 575,
+        flightTime: 80,
+        departCoords: [215, 210],
+        arrivalCoords: [200, 190]
+    },
+    'den-slc': {
+        from: 'Denver',
+        to: 'Salt Lake City',
+        fromCity: 'denver',
+        toCity: 'saltlakecity',
+        distance: 630,
+        flightTime: 90,
+        departCoords: [235, 180],
+        arrivalCoords: [195, 175]
+    },
+    'atl-mco': {
+        from: 'Atlanta',
+        to: 'Orlando',
+        fromCity: 'atlanta',
+        toCity: 'orlando',
+        distance: 660,
+        flightTime: 85,
+        departCoords: [300, 220],
+        arrivalCoords: [305, 245]
+    },
     
-    // Longer domestic (60 min)
+    // Medium flights (90-120 min realistic)
+    'jfk-ord': {
+        from: 'New York',
+        to: 'Chicago',
+        fromCity: 'newyork',
+        toCity: 'chicago',
+        distance: 1190,
+        flightTime: 140,
+        departCoords: [290, 170],
+        arrivalCoords: [270, 180]
+    },
+    'lax-sea': {
+        from: 'Los Angeles',
+        to: 'Seattle',
+        fromCity: 'losangeles',
+        toCity: 'seattle',
+        distance: 1550,
+        flightTime: 160,
+        departCoords: [200, 190],
+        arrivalCoords: [165, 155]
+    },
+    'bos-mia': {
+        from: 'Boston',
+        to: 'Miami',
+        fromCity: 'boston',
+        toCity: 'miami',
+        distance: 2105,
+        flightTime: 185,
+        departCoords: [320, 155],
+        arrivalCoords: [310, 260]
+    },
+    
+    // Longer domestic (2-3 hours realistic)
     'jfk-mia': {
         from: 'New York',
         to: 'Miami',
@@ -1301,8 +1446,18 @@ const REAL_ROUTES = {
         departCoords: [200, 190],
         arrivalCoords: [290, 170]
     },
+    'sfo-jfk': {
+        from: 'San Francisco',
+        to: 'New York',
+        fromCity: 'sanfrancisco',
+        toCity: 'newyork',
+        distance: 4140,
+        flightTime: 340,
+        departCoords: [180, 170],
+        arrivalCoords: [290, 170]
+    },
     
-    // International (90-120 min)
+    // International (6-7 hours realistic)
     'jfk-lhr': { 
         from: 'New York', 
         to: 'London', 
@@ -1322,6 +1477,16 @@ const REAL_ROUTES = {
         flightTime: 440,
         departCoords: [290, 170],
         arrivalCoords: [445, 150]
+    },
+    'lax-lhr': {
+        from: 'Los Angeles',
+        to: 'London',
+        fromCity: 'losangeles',
+        toCity: 'london',
+        distance: 8781,
+        flightTime: 600,
+        departCoords: [200, 190],
+        arrivalCoords: [430, 145]
     }
 };
 
@@ -1368,10 +1533,16 @@ class FocusFlight {
             { id: 'losangeles', name: 'Los Angeles', icon: '🌴', requirement: 0 },
             { id: 'chicago', name: 'Chicago', icon: '🏙️', requirement: 0 },
             { id: 'detroit', name: 'Detroit', icon: '🚗', requirement: 0 },
+            { id: 'sandiego', name: 'San Diego', icon: '⛱️', requirement: 50 },
             { id: 'fortlauderdale', name: 'Fort Lauderdale', icon: '🏖️', requirement: 100 },
             { id: 'miami', name: 'Miami', icon: '🌺', requirement: 100 },
+            { id: 'phoenix', name: 'Phoenix', icon: '🌵', requirement: 150 },
+            { id: 'denver', name: 'Denver', icon: '⛰️', requirement: 200 },
+            { id: 'saltlakecity', name: 'Salt Lake City', icon: '🏔️', requirement: 200 },
             { id: 'seattle', name: 'Seattle', icon: '☕', requirement: 250 },
             { id: 'portland', name: 'Portland', icon: '🌲', requirement: 250 },
+            { id: 'atlanta', name: 'Atlanta', icon: '🍑', requirement: 250 },
+            { id: 'orlando', name: 'Orlando', icon: '🎢', requirement: 250 },
             { id: 'dallas', name: 'Dallas', icon: '🤠', requirement: 300 },
             { id: 'houston', name: 'Houston', icon: '🚀', requirement: 300 },
             { id: 'london', name: 'London', icon: '🇬🇧', requirement: 500 },
@@ -1430,10 +1601,10 @@ class FocusFlight {
     }
 
     attachEventListeners() {
-        document.getElementById('continueToSeats').addEventListener('click', () => this.goToStep(2));
+        document.getElementById('continueToFlights').addEventListener('click', () => this.goToStep(2));
         document.getElementById('backToDuration').addEventListener('click', () => this.goToStep(1));
-        document.getElementById('continueToRoutes').addEventListener('click', () => this.goToStep(3));
-        document.getElementById('backToSeats').addEventListener('click', () => this.goToStep(2));
+        document.getElementById('continueToSeats').addEventListener('click', () => this.goToStep(3));
+        document.getElementById('backToFlights').addEventListener('click', () => this.goToStep(2));
         document.getElementById('startFlight').addEventListener('click', () => this.startFlight());
         document.getElementById('pauseFlight').addEventListener('click', () => this.togglePause());
         document.getElementById('cancelFlight').addEventListener('click', () => this.cancelFlight());
@@ -1704,38 +1875,64 @@ class FocusFlight {
     }
 
     goToStep(step) {
-        // Hide all steps
-        document.getElementById('step1Content').classList.add('hidden');
-        document.getElementById('step2Content').classList.add('hidden');
-        document.getElementById('step3Content').classList.add('hidden');
+        // Hide all steps with fade out
+        const steps = [
+            document.getElementById('step1Content'),
+            document.getElementById('step2Content'),
+            document.getElementById('step3Content')
+        ];
         
-        // Update step indicators
-        document.getElementById('step1Dot').classList.remove('active', 'completed');
-        document.getElementById('step2Dot').classList.remove('active', 'completed');
-        document.getElementById('step3Dot').classList.remove('active', 'completed');
-        document.getElementById('connector1').classList.remove('completed');
-        document.getElementById('connector2').classList.remove('completed');
+        steps.forEach(s => {
+            s.style.opacity = '0';
+            s.style.transform = 'translateY(30px)';
+        });
         
-        // Mark completed steps
-        if (step > 1) {
-            document.getElementById('step1Dot').classList.add('completed');
-            document.getElementById('connector1').classList.add('completed');
-        }
-        if (step > 2) {
-            document.getElementById('step2Dot').classList.add('completed');
-            document.getElementById('connector2').classList.add('completed');
-        }
-        
-        // Show current step
-        document.getElementById(`step${step}Dot`).classList.add('active');
-        document.getElementById(`step${step}Content`).classList.remove('hidden');
-        
-        // Special handling for step 3 (routes need rendering with current duration)
-        if (step === 3) {
-            this.renderRoutes();
-        }
-        
-        this.session.currentStep = step;
+        setTimeout(() => {
+            steps.forEach(s => s.classList.add('hidden'));
+            
+            // Update step indicators
+            document.getElementById('step1Dot').classList.remove('active', 'completed');
+            document.getElementById('step2Dot').classList.remove('active', 'completed');
+            document.getElementById('step3Dot').classList.remove('active', 'completed');
+            document.getElementById('connector1').classList.remove('completed');
+            document.getElementById('connector2').classList.remove('completed');
+            
+            // Mark completed steps
+            if (step > 1) {
+                document.getElementById('step1Dot').classList.add('completed');
+                document.getElementById('connector1').classList.add('completed');
+            }
+            if (step > 2) {
+                document.getElementById('step2Dot').classList.add('completed');
+                document.getElementById('connector2').classList.add('completed');
+            }
+            
+            // Show current step
+            document.getElementById(`step${step}Dot`).classList.add('active');
+            const currentStep = document.getElementById(`step${step}Content`);
+            currentStep.classList.remove('hidden');
+            
+            // Trigger animation
+            setTimeout(() => {
+                currentStep.style.opacity = '1';
+                currentStep.style.transform = 'translateY(0)';
+            }, 50);
+            
+            // Special handling for step 2 (flights need rendering with current duration)
+            if (step === 2) {
+                this.renderRoutes();
+                const duration = this.session.selectedDuration;
+                const message = document.getElementById('flightFilterMessage');
+                message.textContent = `Showing flights suitable for ${duration} minute focus session`;
+            }
+            
+            // Special handling for step 3 (re-render seats for clean state)
+            if (step === 3) {
+                this.renderSeats();
+            }
+            
+            this.session.currentStep = step;
+        }, 300);
     }
 
     getSeatMultiplier(seatClass) {
@@ -1748,8 +1945,13 @@ class FocusFlight {
             alert('Please select a route first!');
             return;
         }
+        
+        if (!this.session.selectedSeat) {
+            alert('Please select a seat first!');
+            return;
+        }
 
-        const duration = this.session.selectedDuration;
+        const duration = this.session.selectedDuration; // Use the selected time duration
         const seatClass = this.session.selectedSeat;
         const route = REAL_ROUTES[this.session.selectedRoute];
 
