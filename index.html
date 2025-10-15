@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlight - Your Focus Journey</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>✈️ FocusFlight</h1>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Total Miles:</span>
+                    <span class="stat-value" id="totalMiles">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Flights Completed:</span>
+                    <span class="stat-value" id="flightsCompleted">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Booking Section -->
+            <section class="booking-section" id="bookingSection">
+                <h2>Book Your Focus Flight</h2>
+                
+                <div class="booking-form">
+                    <div class="form-group">
+                        <label for="duration">Flight Duration:</label>
+                        <select id="duration" class="form-control">
+                            <option value="15">15 Minutes - Short Hop</option>
+                            <option value="25" selected>25 Minutes - Pomodoro Flight</option>
+                            <option value="30">30 Minutes - Regional Route</option>
+                            <option value="45">45 Minutes - Domestic Flight</option>
+                            <option value="60">60 Minutes - International Journey</option>
+                            <option value="90">90 Minutes - Long Haul</option>
+                            <option value="120">120 Minutes - Transcontinental</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Seat Class:</label>
+                        <div class="seat-classes">
+                            <div class="seat-class" data-class="economy">
+                                <input type="radio" name="seatClass" id="economy" value="economy" checked>
+                                <label for="economy">
+                                    <span class="seat-icon">💺</span>
+                                    <span class="seat-name">Economy</span>
+                                    <span class="seat-multiplier">1x Miles</span>
+                                </label>
+                            </div>
+                            <div class="seat-class" data-class="business">
+                                <input type="radio" name="seatClass" id="business" value="business">
+                                <label for="business">
+                                    <span class="seat-icon">🛋️</span>
+                                    <span class="seat-name">Business</span>
+                                    <span class="seat-multiplier">1.5x Miles</span>
+                                </label>
+                            </div>
+                            <div class="seat-class" data-class="first" data-locked="true">
+                                <input type="radio" name="seatClass" id="first" value="first" disabled>
+                                <label for="first" class="locked">
+                                    <span class="seat-icon">👑</span>
+                                    <span class="seat-name">First Class</span>
+                                    <span class="seat-multiplier">2x Miles</span>
+                                    <span class="locked-badge">🔒 Unlock at 500 miles</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="route">Select Route:</label>
+                        <select id="route" class="form-control">
+                            <option value="newyork-boston">New York → Boston</option>
+                            <option value="sanfrancisco-losangeles">San Francisco → Los Angeles</option>
+                            <option value="chicago-detroit">Chicago → Detroit</option>
+                            <option value="miami-orlando" data-locked="true" disabled>Miami → Orlando 🔒 (250 miles)</option>
+                            <option value="seattle-portland" data-locked="true" disabled>Seattle → Portland 🔒 (500 miles)</option>
+                            <option value="newyork-london" data-locked="true" disabled>New York → London 🔒 (1000 miles)</option>
+                        </select>
+                    </div>
+
+                    <button id="startFlight" class="btn btn-primary">Start Flight ✈️</button>
+                </div>
+            </section>
+
+            <!-- Flight Session Section -->
+            <section class="flight-section hidden" id="flightSection">
+                <div class="flight-info">
+                    <h2 id="flightRoute">New York → Boston</h2>
+                    <div class="flight-details">
+                        <span class="detail-item">
+                            <strong>Class:</strong> <span id="currentClass">Economy</span>
+                        </span>
+                        <span class="detail-item">
+                            <strong>Miles to Earn:</strong> <span id="milesToEarn">25</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Map Visualization -->
+                <div class="map-container">
+                    <svg id="flightMap" viewBox="0 0 800 400">
+                        <!-- Background -->
+                        <rect width="800" height="400" fill="#e3f2fd"/>
+                        
+                        <!-- Flight Path -->
+                        <line id="flightPath" x1="100" y1="200" x2="700" y2="200" 
+                              stroke="#2196F3" stroke-width="3" stroke-dasharray="10,5" opacity="0.5"/>
+                        
+                        <!-- Departure City -->
+                        <circle id="departureCity" cx="100" cy="200" r="8" fill="#4CAF50"/>
+                        <text x="100" y="230" text-anchor="middle" class="city-label">Departure</text>
+                        
+                        <!-- Arrival City -->
+                        <circle id="arrivalCity" cx="700" cy="200" r="8" fill="#FF5722"/>
+                        <text x="700" y="230" text-anchor="middle" class="city-label">Arrival</text>
+                        
+                        <!-- Plane (will be animated) -->
+                        <text id="plane" x="100" y="200" text-anchor="middle" class="plane-icon" font-size="32">✈️</text>
+                    </svg>
+                </div>
+
+                <!-- Timer -->
+                <div class="timer-container">
+                    <div class="timer" id="timer">25:00</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar"></div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls">
+                    <button id="pauseFlight" class="btn btn-secondary">⏸️ Pause</button>
+                    <button id="cancelFlight" class="btn btn-danger">✕ Cancel Flight</button>
+                </div>
+            </section>
+
+            <!-- Achievements Section -->
+            <section class="achievements-section">
+                <h2>Achievements & Progress</h2>
+                <div class="achievements-grid" id="achievementsGrid">
+                    <!-- Achievements will be dynamically added here -->
+                </div>
+            </section>
+
+            <!-- Cities Section -->
+            <section class="cities-section">
+                <h2>Unlocked Cities</h2>
+                <div class="cities-grid" id="citiesGrid">
+                    <!-- Cities will be dynamically added here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
