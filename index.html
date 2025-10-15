@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FocusFlight - Your Focus Journey</title>
+    <title>FocusFlight - Your Realistic Focus Journey</title>
     <style>
 * {
     margin: 0;
@@ -12,386 +12,642 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
     min-height: 100vh;
     padding: 20px;
     color: #333;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
 /* Header Styles */
 .header {
-    background: white;
-    padding: 20px 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 20px 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .header h1 {
-    font-size: 2em;
-    color: #667eea;
+    font-size: 2.2em;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
 }
 
 .stats {
     display: flex;
-    gap: 30px;
+    gap: 40px;
 }
 
 .stat-item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 10px 20px;
+    background: rgba(30, 60, 114, 0.05);
+    border-radius: 12px;
 }
 
 .stat-label {
-    font-size: 0.9em;
+    font-size: 0.85em;
     color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
 }
 
 .stat-value {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #667eea;
+    font-size: 1.8em;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 5px;
 }
 
 /* Main Content */
 .main-content {
     display: grid;
-    gap: 20px;
+    gap: 24px;
 }
 
-/* Booking Section */
-.booking-section {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Booking Steps Container */
+.booking-steps {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    min-height: 600px;
+    position: relative;
+    overflow: hidden;
 }
 
-.booking-section h2 {
-    margin-bottom: 20px;
-    color: #667eea;
-}
-
-.booking-form {
+.step-indicator {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.form-group label {
-    font-weight: 600;
-    color: #333;
-}
-
-.form-control {
-    padding: 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 1em;
-    transition: border-color 0.3s;
-}
-
-.form-control:focus {
-    outline: none;
-    border-color: #667eea;
-}
-
-/* Seat Classes */
-.seat-classes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-}
-
-.seat-class input[type="radio"] {
-    display: none;
-}
-
-.seat-class label {
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 20px;
-    border: 3px solid #e0e0e0;
-    border-radius: 12px;
+    gap: 20px;
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.step-dot {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1em;
+    color: #999;
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+.step-dot.active {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    transform: scale(1.15);
+    box-shadow: 0 4px 20px rgba(30, 60, 114, 0.4);
+}
+
+.step-dot.completed {
+    background: #28a745;
+    color: white;
+}
+
+.step-connector {
+    width: 80px;
+    height: 3px;
+    background: #e9ecef;
+    transition: all 0.4s ease;
+}
+
+.step-connector.completed {
+    background: #28a745;
+}
+
+.step-content {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step-title {
+    font-size: 2em;
+    color: #1e3c72;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* Duration Selection */
+.duration-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.duration-card {
+    background: white;
+    border: 3px solid #e9ecef;
+    border-radius: 16px;
+    padding: 25px;
     cursor: pointer;
-    transition: all 0.3s;
-    background: #f9f9f9;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
 }
 
-.seat-class input[type="radio"]:checked + label {
-    border-color: #667eea;
-    background: #f0f4ff;
-    transform: scale(1.05);
+.duration-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.seat-class label.locked {
+.duration-card.selected {
+    border-color: #2a5298;
+    background: linear-gradient(135deg, rgba(30, 60, 114, 0.05) 0%, rgba(42, 82, 152, 0.05) 100%);
+    box-shadow: 0 8px 20px rgba(30, 60, 114, 0.2);
+}
+
+.duration-time {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #1e3c72;
+    margin-bottom: 10px;
+}
+
+.duration-label {
+    font-size: 1.1em;
+    color: #666;
+    font-weight: 600;
+}
+
+/* Seat Selection */
+.seat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.seat-card {
+    background: white;
+    border: 3px solid #e9ecef;
+    border-radius: 16px;
+    padding: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+}
+
+.seat-card:hover:not(.locked) {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.seat-card.selected {
+    border-color: #2a5298;
+    background: linear-gradient(135deg, rgba(30, 60, 114, 0.05) 0%, rgba(42, 82, 152, 0.05) 100%);
+    box-shadow: 0 8px 20px rgba(30, 60, 114, 0.2);
+}
+
+.seat-card.locked {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
 .seat-icon {
-    font-size: 2em;
-    margin-bottom: 10px;
+    font-size: 3.5em;
+    margin-bottom: 15px;
 }
 
 .seat-name {
-    font-weight: 600;
-    margin-bottom: 5px;
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #1e3c72;
+    margin-bottom: 10px;
 }
 
 .seat-multiplier {
-    font-size: 0.9em;
+    font-size: 1em;
     color: #666;
+    font-weight: 600;
 }
 
 .locked-badge {
+    font-size: 0.85em;
+    color: #dc3545;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+/* Route Selection */
+.routes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.route-card {
+    background: white;
+    border: 3px solid #e9ecef;
+    border-radius: 16px;
+    padding: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.route-card:hover:not(.locked) {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.route-card.selected {
+    border-color: #2a5298;
+    background: linear-gradient(135deg, rgba(30, 60, 114, 0.05) 0%, rgba(42, 82, 152, 0.05) 100%);
+    box-shadow: 0 8px 20px rgba(30, 60, 114, 0.2);
+}
+
+.route-card.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.route-card.recommended {
+    border-color: #ffc107;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+}
+
+.route-card.recommended::before {
+    content: "⭐ RECOMMENDED";
+    position: absolute;
+    top: -10px;
+    right: 15px;
+    background: #ffc107;
+    color: #333;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.route-cities {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #1e3c72;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.route-arrow {
+    color: #2a5298;
+    margin: 0 10px;
+}
+
+.route-info {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #e9ecef;
+}
+
+.route-info-item {
+    text-align: center;
+}
+
+.route-info-label {
     font-size: 0.8em;
-    color: #ff5722;
-    margin-top: 5px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.route-info-value {
+    font-size: 1.1em;
+    color: #333;
+    font-weight: 700;
 }
 
 /* Buttons */
 .btn {
-    padding: 15px 30px;
+    padding: 18px 40px;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1em;
-    font-weight: 600;
+    border-radius: 12px;
+    font-size: 1.2em;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     color: white;
+    box-shadow: 0 6px 20px rgba(30, 60, 114, 0.3);
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(30, 60, 114, 0.4);
 }
 
 .btn-secondary {
-    background: #ffc107;
-    color: #333;
+    background: #6c757d;
+    color: white;
 }
 
 .btn-secondary:hover {
-    background: #ffb300;
+    background: #5a6268;
+    transform: translateY(-2px);
 }
 
 .btn-danger {
-    background: #f44336;
+    background: #dc3545;
     color: white;
 }
 
 .btn-danger:hover {
-    background: #d32f2f;
+    background: #c82333;
 }
 
-/* Flight Section */
-.flight-section {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.btn-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
 }
 
-.flight-section.hidden {
+/* Flight Tracker Section */
+.flight-tracker {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.flight-tracker.hidden {
     display: none;
 }
 
-.flight-info {
-    margin-bottom: 20px;
+.flight-header {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.flight-info h2 {
-    color: #667eea;
+.flight-route-title {
+    font-size: 2.5em;
+    color: #1e3c72;
+    font-weight: 700;
     margin-bottom: 10px;
 }
 
 .flight-details {
     display: flex;
-    gap: 30px;
+    justify-content: center;
+    gap: 40px;
     font-size: 1.1em;
-}
-
-.detail-item {
     color: #666;
 }
 
-/* Map Container */
-.map-container {
-    background: #e3f2fd;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
+/* Globe Visualization */
+.globe-container {
+    background: linear-gradient(135deg, #0a1929 0%, #1a2332 50%, #2a3f5f 100%);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
 }
 
-#flightMap {
+.globe-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+#globeMap {
     width: 100%;
     height: auto;
-}
-
-.city-label {
-    font-size: 14px;
-    fill: #333;
-}
-
-.plane-icon {
-    transition: all 0.5s linear;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
 }
 
 /* Timer */
-.timer-container {
-    margin-bottom: 20px;
+.timer-section {
+    margin-bottom: 30px;
 }
 
-.timer {
-    font-size: 4em;
-    font-weight: bold;
+.timer-display {
+    font-size: 5em;
+    font-weight: 700;
     text-align: center;
-    color: #667eea;
-    margin-bottom: 15px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    font-variant-numeric: tabular-nums;
 }
 
-.progress-bar {
+.progress-container {
     width: 100%;
-    height: 30px;
-    background: #e0e0e0;
-    border-radius: 15px;
+    height: 40px;
+    background: #e9ecef;
+    border-radius: 20px;
     overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #4CAF50 0%, #8BC34A 100%);
+    background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
     width: 0%;
-    transition: width 0.5s linear;
-    border-radius: 15px;
+    transition: width 0.3s ease;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.progress-percentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    color: #333;
+    font-size: 1.1em;
 }
 
 /* Controls */
 .controls {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
 }
 
-/* Achievements Section */
-.achievements-section {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Lower sections */
+.info-sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
 }
 
-.achievements-section h2 {
-    color: #667eea;
+.info-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.info-section h2 {
+    color: #1e3c72;
     margin-bottom: 20px;
+    font-size: 1.8em;
+    font-weight: 700;
 }
 
 .achievements-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 15px;
 }
 
 .achievement-card {
-    background: #f9f9f9;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
     padding: 20px;
     text-align: center;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
 }
 
 .achievement-card.unlocked {
-    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
     border-color: #ffc107;
 }
 
 .achievement-card.locked {
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .achievement-icon {
-    font-size: 3em;
+    font-size: 2.5em;
     margin-bottom: 10px;
 }
 
 .achievement-name {
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 5px;
+    color: #1e3c72;
 }
 
 .achievement-desc {
-    font-size: 0.9em;
+    font-size: 0.85em;
     color: #666;
-}
-
-/* Cities Section */
-.cities-section {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.cities-section h2 {
-    color: #667eea;
-    margin-bottom: 20px;
 }
 
 .cities-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 15px;
 }
 
 .city-card {
-    background: #f9f9f9;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
     padding: 15px;
     text-align: center;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
 }
 
 .city-card.unlocked {
-    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-    border-color: #2196F3;
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    border-color: #17a2b8;
 }
 
 .city-card.locked {
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .city-icon {
     font-size: 2em;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .city-name {
-    font-weight: 600;
-    margin-bottom: 3px;
+    font-weight: 700;
+    color: #1e3c72;
+    margin-bottom: 5px;
 }
 
 .city-requirement {
@@ -400,24 +656,33 @@ body {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    .info-sections {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
-        gap: 15px;
+        gap: 20px;
     }
 
     .stats {
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
     }
 
-    .seat-classes {
+    .duration-grid,
+    .seat-grid,
+    .routes-grid {
         grid-template-columns: 1fr;
     }
 
-    .timer {
-        font-size: 3em;
+    .timer-display {
+        font-size: 3.5em;
     }
 
     .controls {
@@ -427,9 +692,45 @@ body {
     .btn {
         width: 100%;
     }
+
+    .step-indicator {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 20px;
+    }
 }
 
 /* Animations */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.6s ease forwards;
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.6s ease forwards;
+}
+
 @keyframes pulse {
     0%, 100% {
         transform: scale(1);
@@ -443,19 +744,9 @@ body {
     animation: pulse 2s infinite;
 }
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.slide-in {
-    animation: slideIn 0.5s ease-out;
+/* Hidden utility */
+.hidden {
+    display: none !important;
 }
     </style>
 </head>
@@ -466,11 +757,11 @@ body {
             <h1>✈️ FocusFlight</h1>
             <div class="stats">
                 <div class="stat-item">
-                    <span class="stat-label">Total Miles:</span>
+                    <span class="stat-label">Total Miles</span>
                     <span class="stat-value" id="totalMiles">0</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-label">Flights Completed:</span>
+                    <span class="stat-label">Flights</span>
                     <span class="stat-value" id="flightsCompleted">0</span>
                 </div>
             </div>
@@ -478,142 +769,269 @@ body {
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Booking Section -->
-            <section class="booking-section" id="bookingSection">
-                <h2>Book Your Focus Flight</h2>
-                
-                <div class="booking-form">
-                    <div class="form-group">
-                        <label for="duration">Flight Duration:</label>
-                        <select id="duration" class="form-control">
-                            <option value="15">15 Minutes - Short Hop</option>
-                            <option value="25" selected>25 Minutes - Pomodoro Flight</option>
-                            <option value="30">30 Minutes - Regional Route</option>
-                            <option value="45">45 Minutes - Domestic Flight</option>
-                            <option value="60">60 Minutes - International Journey</option>
-                            <option value="90">90 Minutes - Long Haul</option>
-                            <option value="120">120 Minutes - Transcontinental</option>
-                        </select>
-                    </div>
+            <!-- Booking Steps -->
+            <section class="booking-steps" id="bookingSteps">
+                <!-- Step Indicator -->
+                <div class="step-indicator">
+                    <div class="step-dot active" id="step1Dot">1</div>
+                    <div class="step-connector" id="connector1"></div>
+                    <div class="step-dot" id="step2Dot">2</div>
+                    <div class="step-connector" id="connector2"></div>
+                    <div class="step-dot" id="step3Dot">3</div>
+                </div>
 
-                    <div class="form-group">
-                        <label>Seat Class:</label>
-                        <div class="seat-classes">
-                            <div class="seat-class" data-class="economy">
-                                <input type="radio" name="seatClass" id="economy" value="economy" checked>
-                                <label for="economy">
-                                    <span class="seat-icon">💺</span>
-                                    <span class="seat-name">Economy</span>
-                                    <span class="seat-multiplier">1x Miles</span>
-                                </label>
-                            </div>
-                            <div class="seat-class" data-class="business">
-                                <input type="radio" name="seatClass" id="business" value="business">
-                                <label for="business">
-                                    <span class="seat-icon">🛋️</span>
-                                    <span class="seat-name">Business</span>
-                                    <span class="seat-multiplier">1.5x Miles</span>
-                                </label>
-                            </div>
-                            <div class="seat-class" data-class="first" data-locked="true">
-                                <input type="radio" name="seatClass" id="first" value="first" disabled>
-                                <label for="first" class="locked">
-                                    <span class="seat-icon">👑</span>
-                                    <span class="seat-name">First Class</span>
-                                    <span class="seat-multiplier">2x Miles</span>
-                                    <span class="locked-badge">🔒 Unlock at 500 miles</span>
-                                </label>
-                            </div>
-                        </div>
+                <!-- Step 1: Duration Selection -->
+                <div class="step-content" id="step1Content">
+                    <h2 class="step-title">Select Your Focus Duration</h2>
+                    <div class="duration-grid" id="durationGrid"></div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" id="continueToSeats">Continue to Seat Selection</button>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="route">Select Route:</label>
-                        <select id="route" class="form-control">
-                            <option value="newyork-boston">New York → Boston</option>
-                            <option value="sanfrancisco-losangeles">San Francisco → Los Angeles</option>
-                            <option value="chicago-detroit">Chicago → Detroit</option>
-                            <option value="miami-orlando" data-locked="true" disabled>Miami → Orlando 🔒 (250 miles)</option>
-                            <option value="seattle-portland" data-locked="true" disabled>Seattle → Portland 🔒 (500 miles)</option>
-                            <option value="newyork-london" data-locked="true" disabled>New York → London 🔒 (1000 miles)</option>
-                        </select>
+                <!-- Step 2: Seat Selection -->
+                <div class="step-content hidden" id="step2Content">
+                    <h2 class="step-title">Choose Your Seat Class</h2>
+                    <div class="seat-grid" id="seatGrid"></div>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" id="backToDuration">Back</button>
+                        <button class="btn btn-primary" id="continueToRoutes">Continue to Route Selection</button>
                     </div>
+                </div>
 
-                    <button id="startFlight" class="btn btn-primary">Start Flight ✈️</button>
+                <!-- Step 3: Route Selection -->
+                <div class="step-content hidden" id="step3Content">
+                    <h2 class="step-title">Select Your Flight Route</h2>
+                    <div class="routes-grid" id="routesGrid"></div>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" id="backToSeats">Back</button>
+                        <button class="btn btn-primary" id="startFlight">Start Your Flight ✈️</button>
+                    </div>
                 </div>
             </section>
 
-            <!-- Flight Session Section -->
-            <section class="flight-section hidden" id="flightSection">
-                <div class="flight-info">
-                    <h2 id="flightRoute">New York → Boston</h2>
+            <!-- Flight Tracker -->
+            <section class="flight-tracker hidden" id="flightTracker">
+                <div class="flight-header">
+                    <h2 class="flight-route-title" id="flightRouteTitle">New York → Boston</h2>
                     <div class="flight-details">
-                        <span class="detail-item">
-                            <strong>Class:</strong> <span id="currentClass">Economy</span>
-                        </span>
-                        <span class="detail-item">
-                            <strong>Miles to Earn:</strong> <span id="milesToEarn">25</span>
-                        </span>
+                        <span><strong>Class:</strong> <span id="flightClass">Economy</span></span>
+                        <span><strong>Distance:</strong> <span id="flightDistance">306 km</span></span>
+                        <span><strong>Miles to Earn:</strong> <span id="milesToEarn">25</span></span>
                     </div>
                 </div>
 
-                <!-- Map Visualization -->
-                <div class="map-container">
-                    <svg id="flightMap" viewBox="0 0 800 400">
-                        <!-- Background -->
-                        <rect width="800" height="400" fill="#e3f2fd"/>
+                <!-- Globe Visualization -->
+                <div class="globe-container">
+                    <svg id="globeMap" viewBox="0 0 800 500">
+                        <!-- Globe background -->
+                        <defs>
+                            <radialGradient id="globeGradient" cx="50%" cy="50%">
+                                <stop offset="0%" style="stop-color:#4a90e2;stop-opacity:1" />
+                                <stop offset="70%" style="stop-color:#2c5aa0;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#1a3a6e;stop-opacity:1" />
+                            </radialGradient>
+                            <radialGradient id="globeHighlight" cx="35%" cy="35%">
+                                <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.3" />
+                                <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0" />
+                            </radialGradient>
+                        </defs>
                         
-                        <!-- Flight Path -->
-                        <line id="flightPath" x1="100" y1="200" x2="700" y2="200" 
-                              stroke="#2196F3" stroke-width="3" stroke-dasharray="10,5" opacity="0.5"/>
+                        <!-- Globe sphere -->
+                        <circle cx="400" cy="250" r="220" fill="url(#globeGradient)" />
+                        <circle cx="400" cy="250" r="220" fill="url(#globeHighlight)" />
                         
-                        <!-- Departure City -->
-                        <circle id="departureCity" cx="100" cy="200" r="8" fill="#4CAF50"/>
-                        <text x="100" y="230" text-anchor="middle" class="city-label">Departure</text>
+                        <!-- Latitude lines -->
+                        <ellipse cx="400" cy="250" rx="220" ry="220" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <ellipse cx="400" cy="250" rx="220" ry="110" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <ellipse cx="400" cy="250" rx="220" ry="44" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <line x1="180" y1="250" x2="620" y2="250" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
                         
-                        <!-- Arrival City -->
-                        <circle id="arrivalCity" cx="700" cy="200" r="8" fill="#FF5722"/>
-                        <text x="700" y="230" text-anchor="middle" class="city-label">Arrival</text>
+                        <!-- Longitude lines -->
+                        <ellipse cx="400" cy="250" rx="110" ry="220" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <ellipse cx="400" cy="250" rx="44" ry="220" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <line x1="400" y1="30" x2="400" y2="470" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
                         
-                        <!-- Plane (will be animated) -->
-                        <text id="plane" x="100" y="200" text-anchor="middle" class="plane-icon" font-size="32">✈️</text>
+                        <!-- Continental outlines (simplified) -->
+                        <g id="continents" fill="#3d7e3d" opacity="0.7">
+                            <!-- North America (simplified) -->
+                            <path d="M 180,120 Q 220,100 260,110 Q 300,120 320,140 Q 340,160 350,180 Q 360,200 350,220 Q 340,240 320,250 Q 300,260 280,270 Q 260,280 240,280 Q 220,280 200,270 Q 180,260 170,240 Q 160,220 165,200 Q 170,180 175,160 Q 180,140 180,120 Z"/>
+                            
+                            <!-- Europe (simplified) -->
+                            <path d="M 420,130 Q 440,125 455,135 Q 470,145 475,160 Q 480,175 475,190 Q 470,205 455,210 Q 440,215 425,210 Q 410,205 405,190 Q 400,175 405,160 Q 410,145 420,130 Z"/>
+                            
+                            <!-- South America (simplified) -->
+                            <path d="M 300,280 Q 310,300 315,320 Q 320,340 318,360 Q 316,380 308,395 Q 300,410 285,415 Q 270,420 260,410 Q 250,400 245,385 Q 240,370 242,350 Q 244,330 250,310 Q 256,290 270,285 Q 284,280 300,280 Z"/>
+                            
+                            <!-- Africa (simplified) -->
+                            <path d="M 440,220 Q 455,240 465,260 Q 475,280 478,300 Q 481,320 475,340 Q 469,360 455,370 Q 441,380 425,375 Q 409,370 400,355 Q 391,340 390,320 Q 389,300 395,280 Q 401,260 410,245 Q 419,230 440,220 Z"/>
+                        </g>
+                        
+                        <!-- Flight path (will be drawn dynamically) -->
+                        <path id="flightPath" fill="none" stroke="#ffc107" stroke-width="3" stroke-dasharray="10,5" opacity="0.8"/>
+                        
+                        <!-- Departure marker -->
+                        <g id="departureMarker">
+                            <circle cx="0" cy="0" r="8" fill="#28a745" stroke="white" stroke-width="2"/>
+                            <text x="0" y="-15" text-anchor="middle" fill="white" font-size="14" font-weight="bold" id="departureLabel">Departure</text>
+                        </g>
+                        
+                        <!-- Arrival marker -->
+                        <g id="arrivalMarker">
+                            <circle cx="0" cy="0" r="8" fill="#dc3545" stroke="white" stroke-width="2"/>
+                            <text x="0" y="-15" text-anchor="middle" fill="white" font-size="14" font-weight="bold" id="arrivalLabel">Arrival</text>
+                        </g>
+                        
+                        <!-- Plane -->
+                        <text id="plane" x="0" y="0" text-anchor="middle" font-size="32" transform="rotate(0)">✈️</text>
                     </svg>
                 </div>
 
                 <!-- Timer -->
-                <div class="timer-container">
-                    <div class="timer" id="timer">25:00</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressBar"></div>
+                <div class="timer-section">
+                    <div class="timer-display" id="timerDisplay">25:00</div>
+                    <div class="progress-container">
+                        <div class="progress-fill" id="progressFill"></div>
+                        <span class="progress-percentage" id="progressPercentage">0%</span>
                     </div>
                 </div>
 
                 <!-- Controls -->
                 <div class="controls">
-                    <button id="pauseFlight" class="btn btn-secondary">⏸️ Pause</button>
-                    <button id="cancelFlight" class="btn btn-danger">✕ Cancel Flight</button>
+                    <button class="btn btn-secondary" id="pauseFlight">⏸️ Pause</button>
+                    <button class="btn btn-danger" id="cancelFlight">✕ Cancel Flight</button>
                 </div>
             </section>
 
-            <!-- Achievements Section -->
-            <section class="achievements-section">
-                <h2>Achievements & Progress</h2>
-                <div class="achievements-grid" id="achievementsGrid">
-                    <!-- Achievements will be dynamically added here -->
+            <!-- Info Sections -->
+            <div class="info-sections">
+                <!-- Achievements -->
+                <div class="info-section">
+                    <h2>🏆 Achievements</h2>
+                    <div class="achievements-grid" id="achievementsGrid"></div>
                 </div>
-            </section>
 
-            <!-- Cities Section -->
-            <section class="cities-section">
-                <h2>Unlocked Cities</h2>
-                <div class="cities-grid" id="citiesGrid">
-                    <!-- Cities will be dynamically added here -->
+                <!-- Cities -->
+                <div class="info-section">
+                    <h2>🌍 Cities</h2>
+                    <div class="cities-grid" id="citiesGrid"></div>
                 </div>
-            </section>
+            </div>
         </main>
     </div>
 
     <script>
+// Real-world flight routes with accurate data
+const REAL_ROUTES = {
+    // Short flights (15-25 min realistic)
+    'jfk-bos': { 
+        from: 'New York', 
+        to: 'Boston', 
+        fromCity: 'newyork', 
+        toCity: 'boston',
+        distance: 306,  // km
+        flightTime: 65, // minutes (realistic flight time)
+        departCoords: [290, 170],
+        arrivalCoords: [320, 155]
+    },
+    'lax-sfo': { 
+        from: 'Los Angeles', 
+        to: 'San Francisco', 
+        fromCity: 'losangeles', 
+        toCity: 'sanfrancisco',
+        distance: 543,
+        flightTime: 85,
+        departCoords: [200, 190],
+        arrivalCoords: [180, 170]
+    },
+    'mia-fll': {
+        from: 'Miami',
+        to: 'Fort Lauderdale',
+        fromCity: 'miami',
+        toCity: 'fortlauderdale',
+        distance: 42,
+        flightTime: 30,
+        departCoords: [310, 260],
+        arrivalCoords: [315, 257]
+    },
+    
+    // Medium flights (30-45 min realistic)
+    'ord-dtw': { 
+        from: 'Chicago', 
+        to: 'Detroit', 
+        fromCity: 'chicago', 
+        toCity: 'detroit',
+        distance: 382,
+        flightTime: 75,
+        departCoords: [270, 180],
+        arrivalCoords: [295, 175]
+    },
+    'sea-pdx': { 
+        from: 'Seattle', 
+        to: 'Portland', 
+        fromCity: 'seattle', 
+        toCity: 'portland',
+        distance: 233,
+        flightTime: 55,
+        departCoords: [165, 155],
+        arrivalCoords: [170, 165]
+    },
+    'dfw-iah': {
+        from: 'Dallas',
+        to: 'Houston',
+        fromCity: 'dallas',
+        toCity: 'houston',
+        distance: 362,
+        flightTime: 70,
+        departCoords: [250, 220],
+        arrivalCoords: [265, 235]
+    },
+    
+    // Longer domestic (60 min)
+    'jfk-mia': {
+        from: 'New York',
+        to: 'Miami',
+        fromCity: 'newyork',
+        toCity: 'miami',
+        distance: 1759,
+        flightTime: 175,
+        departCoords: [290, 170],
+        arrivalCoords: [310, 260]
+    },
+    'lax-jfk': {
+        from: 'Los Angeles',
+        to: 'New York',
+        fromCity: 'losangeles',
+        toCity: 'newyork',
+        distance: 3974,
+        flightTime: 320,
+        departCoords: [200, 190],
+        arrivalCoords: [290, 170]
+    },
+    
+    // International (90-120 min)
+    'jfk-lhr': { 
+        from: 'New York', 
+        to: 'London', 
+        fromCity: 'newyork', 
+        toCity: 'london',
+        distance: 5585,
+        flightTime: 420,
+        departCoords: [290, 170],
+        arrivalCoords: [430, 145]
+    },
+    'jfk-cdg': {
+        from: 'New York',
+        to: 'Paris',
+        fromCity: 'newyork',
+        toCity: 'paris',
+        distance: 5837,
+        flightTime: 440,
+        departCoords: [290, 170],
+        arrivalCoords: [445, 150]
+    }
+};
+
 // FocusFlight Application
 class FocusFlight {
     constructor() {
@@ -621,7 +1039,7 @@ class FocusFlight {
             totalMiles: 0,
             flightsCompleted: 0,
             achievements: [],
-            unlockedCities: ['newyork', 'boston', 'sanfrancisco', 'losangeles', 'chicago', 'detroit'],
+            unlockedCities: ['newyork', 'boston', 'losangeles', 'sanfrancisco', 'chicago', 'detroit'],
             unlockedSeats: ['economy', 'business']
         };
         
@@ -631,18 +1049,22 @@ class FocusFlight {
             duration: 25,
             elapsed: 0,
             seatClass: 'economy',
-            route: 'newyork-boston',
+            route: 'jfk-bos',
             timer: null,
-            startTime: null
+            startTime: null,
+            currentStep: 1,
+            selectedDuration: 25,
+            selectedSeat: 'economy',
+            selectedRoute: null
         };
 
         this.achievements = [
-            { id: 'first-flight', name: 'First Flight', desc: 'Complete your first focus session', icon: '🎯', requirement: 1 },
-            { id: 'frequent-flyer', name: 'Frequent Flyer', desc: 'Complete 10 flights', icon: '✈️', requirement: 10 },
-            { id: 'globe-trotter', name: 'Globe Trotter', desc: 'Complete 25 flights', icon: '🌍', requirement: 25 },
-            { id: 'mile-high-club', name: 'Mile High Club', desc: 'Earn 100 miles', icon: '💯', requirement: 100 },
-            { id: 'sky-master', name: 'Sky Master', desc: 'Earn 500 miles', icon: '⭐', requirement: 500 },
-            { id: 'aviation-legend', name: 'Aviation Legend', desc: 'Earn 1000 miles', icon: '👑', requirement: 1000 }
+            { id: 'first-flight', name: 'First Flight', desc: 'Complete your first focus session', icon: '🎯', requirement: 1, type: 'flights' },
+            { id: 'frequent-flyer', name: 'Frequent Flyer', desc: 'Complete 10 flights', icon: '✈️', requirement: 10, type: 'flights' },
+            { id: 'globe-trotter', name: 'Globe Trotter', desc: 'Complete 25 flights', icon: '🌍', requirement: 25, type: 'flights' },
+            { id: 'mile-high-club', name: 'Mile High Club', desc: 'Earn 100 miles', icon: '💯', requirement: 100, type: 'miles' },
+            { id: 'sky-master', name: 'Sky Master', desc: 'Earn 500 miles', icon: '⭐', requirement: 500, type: 'miles' },
+            { id: 'aviation-legend', name: 'Aviation Legend', desc: 'Earn 1000 miles', icon: '👑', requirement: 1000, type: 'miles' }
         ];
 
         this.cities = [
@@ -652,22 +1074,31 @@ class FocusFlight {
             { id: 'losangeles', name: 'Los Angeles', icon: '🌴', requirement: 0 },
             { id: 'chicago', name: 'Chicago', icon: '🏙️', requirement: 0 },
             { id: 'detroit', name: 'Detroit', icon: '🚗', requirement: 0 },
-            { id: 'miami', name: 'Miami', icon: '🏖️', requirement: 250 },
-            { id: 'orlando', name: 'Orlando', icon: '🎢', requirement: 250 },
-            { id: 'seattle', name: 'Seattle', icon: '☕', requirement: 500 },
-            { id: 'portland', name: 'Portland', icon: '🌲', requirement: 500 },
-            { id: 'london', name: 'London', icon: '🇬🇧', requirement: 1000 },
-            { id: 'paris', name: 'Paris', icon: '🇫🇷', requirement: 1000 }
+            { id: 'fortlauderdale', name: 'Fort Lauderdale', icon: '🏖️', requirement: 100 },
+            { id: 'miami', name: 'Miami', icon: '🌺', requirement: 100 },
+            { id: 'seattle', name: 'Seattle', icon: '☕', requirement: 250 },
+            { id: 'portland', name: 'Portland', icon: '🌲', requirement: 250 },
+            { id: 'dallas', name: 'Dallas', icon: '🤠', requirement: 300 },
+            { id: 'houston', name: 'Houston', icon: '🚀', requirement: 300 },
+            { id: 'london', name: 'London', icon: '🇬🇧', requirement: 500 },
+            { id: 'paris', name: 'Paris', icon: '🇫🇷', requirement: 500 }
         ];
 
-        this.routes = {
-            'newyork-boston': { from: 'New York', to: 'Boston', fromCity: 'newyork', toCity: 'boston' },
-            'sanfrancisco-losangeles': { from: 'San Francisco', to: 'Los Angeles', fromCity: 'sanfrancisco', toCity: 'losangeles' },
-            'chicago-detroit': { from: 'Chicago', to: 'Detroit', fromCity: 'chicago', toCity: 'detroit' },
-            'miami-orlando': { from: 'Miami', to: 'Orlando', fromCity: 'miami', toCity: 'orlando' },
-            'seattle-portland': { from: 'Seattle', to: 'Portland', fromCity: 'seattle', toCity: 'portland' },
-            'newyork-london': { from: 'New York', to: 'London', fromCity: 'newyork', toCity: 'london' }
-        };
+        this.durations = [
+            { value: 15, label: 'Quick Sprint', category: 'short' },
+            { value: 25, label: 'Pomodoro', category: 'short' },
+            { value: 30, label: 'Half Hour', category: 'medium' },
+            { value: 45, label: 'Power Hour', category: 'medium' },
+            { value: 60, label: 'Deep Work', category: 'long' },
+            { value: 90, label: 'Extended', category: 'long' },
+            { value: 120, label: 'Ultra Focus', category: 'transcontinental' }
+        ];
+
+        this.seats = [
+            { id: 'economy', name: 'Economy', icon: '💺', multiplier: 1, requirement: 0 },
+            { id: 'business', name: 'Business', icon: '🛋️', multiplier: 1.5, requirement: 0 },
+            { id: 'first', name: 'First Class', icon: '👑', multiplier: 2, requirement: 500 }
+        ];
 
         this.init();
     }
@@ -675,6 +1106,8 @@ class FocusFlight {
     init() {
         this.loadData();
         this.updateUI();
+        this.renderDurations();
+        this.renderSeats();
         this.renderAchievements();
         this.renderCities();
         this.attachEventListeners();
@@ -682,15 +1115,19 @@ class FocusFlight {
     }
 
     loadData() {
-        const saved = localStorage.getItem('focusFlight');
+        const saved = localStorage.getItem('focusFlightV2');
         if (saved) {
-            const parsed = JSON.parse(saved);
-            this.data = { ...this.data, ...parsed };
+            try {
+                const parsed = JSON.parse(saved);
+                this.data = { ...this.data, ...parsed };
+            } catch (e) {
+                console.error('Error loading data:', e);
+            }
         }
     }
 
     saveData() {
-        localStorage.setItem('focusFlight', JSON.stringify(this.data));
+        localStorage.setItem('focusFlightV2', JSON.stringify(this.data));
     }
 
     updateUI() {
@@ -699,69 +1136,246 @@ class FocusFlight {
     }
 
     attachEventListeners() {
+        document.getElementById('continueToSeats').addEventListener('click', () => this.goToStep(2));
+        document.getElementById('backToDuration').addEventListener('click', () => this.goToStep(1));
+        document.getElementById('continueToRoutes').addEventListener('click', () => this.goToStep(3));
+        document.getElementById('backToSeats').addEventListener('click', () => this.goToStep(2));
         document.getElementById('startFlight').addEventListener('click', () => this.startFlight());
         document.getElementById('pauseFlight').addEventListener('click', () => this.togglePause());
         document.getElementById('cancelFlight').addEventListener('click', () => this.cancelFlight());
+    }
+
+    renderDurations() {
+        const grid = document.getElementById('durationGrid');
+        grid.innerHTML = '';
         
-        // Update miles calculation when duration or seat class changes
-        document.getElementById('duration').addEventListener('change', () => this.updateMilesPreview());
-        document.querySelectorAll('input[name="seatClass"]').forEach(radio => {
-            radio.addEventListener('change', () => this.updateMilesPreview());
+        this.durations.forEach(duration => {
+            const card = document.createElement('div');
+            card.className = 'duration-card';
+            if (duration.value === this.session.selectedDuration) {
+                card.classList.add('selected');
+            }
+            
+            card.innerHTML = `
+                <div class="duration-time">${duration.value}<span style="font-size: 0.5em;">min</span></div>
+                <div class="duration-label">${duration.label}</div>
+            `;
+            
+            card.addEventListener('click', () => {
+                this.session.selectedDuration = duration.value;
+                document.querySelectorAll('.duration-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+            });
+            
+            grid.appendChild(card);
         });
     }
 
-    updateMilesPreview() {
-        // This could show estimated miles in the UI
+    renderSeats() {
+        const grid = document.getElementById('seatGrid');
+        grid.innerHTML = '';
+        
+        this.seats.forEach(seat => {
+            const unlocked = this.data.unlockedSeats.includes(seat.id) || this.data.totalMiles >= seat.requirement;
+            const card = document.createElement('div');
+            card.className = `seat-card${!unlocked ? ' locked' : ''}`;
+            if (seat.id === this.session.selectedSeat && unlocked) {
+                card.classList.add('selected');
+            }
+            
+            card.innerHTML = `
+                <div class="seat-icon">${seat.icon}</div>
+                <div class="seat-name">${seat.name}</div>
+                <div class="seat-multiplier">${seat.multiplier}x Miles</div>
+                ${!unlocked ? `<div class="locked-badge">🔒 ${seat.requirement} miles required</div>` : ''}
+            `;
+            
+            if (unlocked) {
+                card.addEventListener('click', () => {
+                    this.session.selectedSeat = seat.id;
+                    document.querySelectorAll('.seat-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                });
+            }
+            
+            grid.appendChild(card);
+        });
+    }
+
+    renderRoutes() {
+        const grid = document.getElementById('routesGrid');
+        grid.innerHTML = '';
+        
+        const duration = this.session.selectedDuration;
+        const recommendedRoutes = this.getRecommendedRoutes(duration);
+        
+        Object.entries(REAL_ROUTES).forEach(([id, route]) => {
+            const fromUnlocked = this.data.unlockedCities.includes(route.fromCity);
+            const toUnlocked = this.data.unlockedCities.includes(route.toCity);
+            const unlocked = fromUnlocked && toUnlocked;
+            const recommended = recommendedRoutes.includes(id);
+            
+            const card = document.createElement('div');
+            card.className = `route-card${!unlocked ? ' locked' : ''}${recommended ? ' recommended' : ''}`;
+            if (id === this.session.selectedRoute && unlocked) {
+                card.classList.add('selected');
+            }
+            
+            card.innerHTML = `
+                <div class="route-cities">
+                    ${route.from}<span class="route-arrow">→</span>${route.to}
+                </div>
+                <div class="route-info">
+                    <div class="route-info-item">
+                        <div class="route-info-label">Distance</div>
+                        <div class="route-info-value">${route.distance} km</div>
+                    </div>
+                    <div class="route-info-item">
+                        <div class="route-info-label">Flight Time</div>
+                        <div class="route-info-value">${Math.floor(route.flightTime / 60)}h ${route.flightTime % 60}m</div>
+                    </div>
+                </div>
+                ${!unlocked ? '<div class="locked-badge">🔒 Unlock cities to fly this route</div>' : ''}
+            `;
+            
+            if (unlocked) {
+                card.addEventListener('click', () => {
+                    this.session.selectedRoute = id;
+                    document.querySelectorAll('.route-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                });
+            }
+            
+            grid.appendChild(card);
+        });
+    }
+
+    getRecommendedRoutes(duration) {
+        // Suggest realistic routes based on focus duration
+        const recommended = [];
+        Object.entries(REAL_ROUTES).forEach(([id, route]) => {
+            const ratio = duration / route.flightTime;
+            // Recommend if duration is within 20-40% of actual flight time (realistic compression)
+            if (ratio >= 0.15 && ratio <= 0.50) {
+                recommended.push(id);
+            }
+        });
+        return recommended;
+    }
+
+    goToStep(step) {
+        // Hide all steps
+        document.getElementById('step1Content').classList.add('hidden');
+        document.getElementById('step2Content').classList.add('hidden');
+        document.getElementById('step3Content').classList.add('hidden');
+        
+        // Update step indicators
+        document.getElementById('step1Dot').classList.remove('active', 'completed');
+        document.getElementById('step2Dot').classList.remove('active', 'completed');
+        document.getElementById('step3Dot').classList.remove('active', 'completed');
+        document.getElementById('connector1').classList.remove('completed');
+        document.getElementById('connector2').classList.remove('completed');
+        
+        // Mark completed steps
+        if (step > 1) {
+            document.getElementById('step1Dot').classList.add('completed');
+            document.getElementById('connector1').classList.add('completed');
+        }
+        if (step > 2) {
+            document.getElementById('step2Dot').classList.add('completed');
+            document.getElementById('connector2').classList.add('completed');
+        }
+        
+        // Show current step
+        document.getElementById(`step${step}Dot`).classList.add('active');
+        document.getElementById(`step${step}Content`).classList.remove('hidden');
+        
+        // Special handling for step 3 (routes need rendering with current duration)
+        if (step === 3) {
+            this.renderRoutes();
+        }
+        
+        this.session.currentStep = step;
     }
 
     getSeatMultiplier(seatClass) {
-        const multipliers = {
-            'economy': 1,
-            'business': 1.5,
-            'first': 2
-        };
-        return multipliers[seatClass] || 1;
+        const seat = this.seats.find(s => s.id === seatClass);
+        return seat ? seat.multiplier : 1;
     }
 
     startFlight() {
-        const duration = parseInt(document.getElementById('duration').value);
-        const seatClass = document.querySelector('input[name="seatClass"]:checked').value;
-        const route = document.getElementById('route').value;
+        if (!this.session.selectedRoute) {
+            alert('Please select a route first!');
+            return;
+        }
+
+        const duration = this.session.selectedDuration;
+        const seatClass = this.session.selectedSeat;
+        const route = REAL_ROUTES[this.session.selectedRoute];
 
         this.session = {
+            ...this.session,
             active: true,
             paused: false,
             duration: duration,
             elapsed: 0,
             seatClass: seatClass,
-            route: route,
+            route: this.session.selectedRoute,
             timer: null,
             startTime: Date.now()
         };
 
-        // Update UI
-        document.getElementById('bookingSection').classList.add('hidden');
-        document.getElementById('flightSection').classList.remove('hidden');
+        // Hide booking, show tracker
+        document.getElementById('bookingSteps').classList.add('hidden');
+        document.getElementById('flightTracker').classList.remove('hidden');
 
-        const routeInfo = this.routes[route];
-        document.getElementById('flightRoute').textContent = `${routeInfo.from} → ${routeInfo.to}`;
-        document.getElementById('currentClass').textContent = seatClass.charAt(0).toUpperCase() + seatClass.slice(1);
+        // Update flight info
+        document.getElementById('flightRouteTitle').textContent = `${route.from} → ${route.to}`;
+        document.getElementById('flightClass').textContent = seatClass.charAt(0).toUpperCase() + seatClass.slice(1);
+        document.getElementById('flightDistance').textContent = `${route.distance} km`;
         
         const baseMiles = duration;
         const multiplier = this.getSeatMultiplier(seatClass);
         const totalMiles = Math.round(baseMiles * multiplier);
         document.getElementById('milesToEarn').textContent = totalMiles;
 
-        // Update map labels
-        document.querySelector('#flightMap text:nth-of-type(1)').textContent = routeInfo.from;
-        document.querySelector('#flightMap text:nth-of-type(2)').textContent = routeInfo.to;
+        // Update globe visualization
+        this.updateGlobeVisualization(route);
 
         // Start the timer
         this.runTimer();
     }
 
+    updateGlobeVisualization(route) {
+        const [x1, y1] = route.departCoords;
+        const [x2, y2] = route.arrivalCoords;
+        
+        // Update departure marker
+        const departMarker = document.getElementById('departureMarker');
+        departMarker.setAttribute('transform', `translate(${x1}, ${y1})`);
+        document.getElementById('departureLabel').textContent = route.from;
+        
+        // Update arrival marker
+        const arrivalMarker = document.getElementById('arrivalMarker');
+        arrivalMarker.setAttribute('transform', `translate(${x2}, ${y2})`);
+        document.getElementById('arrivalLabel').textContent = route.to;
+        
+        // Calculate curved path (arc over globe)
+        const midX = (x1 + x2) / 2;
+        const midY = Math.min(y1, y2) - Math.abs(x2 - x1) * 0.15; // Arc upward
+        
+        // Create bezier curve path
+        const pathData = `M ${x1},${y1} Q ${midX},${midY} ${x2},${y2}`;
+        document.getElementById('flightPath').setAttribute('d', pathData);
+        
+        // Position plane at start
+        const plane = document.getElementById('plane');
+        plane.setAttribute('x', x1);
+        plane.setAttribute('y', y1);
+    }
+
     runTimer() {
-        const updateInterval = 100; // Update every 100ms for smooth animation
+        const updateInterval = 100;
         
         this.session.timer = setInterval(() => {
             if (!this.session.paused) {
@@ -771,26 +1385,49 @@ class FocusFlight {
                 const minutes = Math.floor(remainingSeconds / 60);
                 const seconds = Math.floor(remainingSeconds % 60);
                 
-                document.getElementById('timer').textContent = 
+                document.getElementById('timerDisplay').textContent = 
                     `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 
-                // Update progress bar
+                // Update progress
                 const progress = (this.session.elapsed / (this.session.duration * 60)) * 100;
-                document.getElementById('progressBar').style.width = `${Math.min(progress, 100)}%`;
+                const progressClamped = Math.min(progress, 100);
+                document.getElementById('progressFill').style.width = `${progressClamped}%`;
+                document.getElementById('progressPercentage').textContent = `${Math.round(progressClamped)}%`;
                 
-                // Update plane position
-                const planeProgress = Math.min(progress / 100, 1);
-                const startX = 100;
-                const endX = 700;
-                const planeX = startX + (endX - startX) * planeProgress;
-                document.getElementById('plane').setAttribute('x', planeX);
+                // Animate plane along path
+                this.animatePlane(progressClamped / 100);
                 
-                // Check if completed
                 if (remainingSeconds <= 0) {
                     this.completeFlight();
                 }
             }
         }, updateInterval);
+    }
+
+    animatePlane(progress) {
+        const route = REAL_ROUTES[this.session.route];
+        const [x1, y1] = route.departCoords;
+        const [x2, y2] = route.arrivalCoords;
+        
+        // Calculate position along bezier curve
+        const midX = (x1 + x2) / 2;
+        const midY = Math.min(y1, y2) - Math.abs(x2 - x1) * 0.15;
+        
+        // Quadratic Bezier formula
+        const t = progress;
+        const planeX = (1-t)*(1-t)*x1 + 2*(1-t)*t*midX + t*t*x2;
+        const planeY = (1-t)*(1-t)*y1 + 2*(1-t)*t*midY + t*t*y2;
+        
+        // Calculate angle for plane rotation
+        const nextT = Math.min(t + 0.01, 1);
+        const nextX = (1-nextT)*(1-nextT)*x1 + 2*(1-nextT)*nextT*midX + nextT*nextT*x2;
+        const nextY = (1-nextT)*(1-nextT)*y1 + 2*(1-nextT)*nextT*midY + nextT*nextT*y2;
+        const angle = Math.atan2(nextY - planeY, nextX - planeX) * 180 / Math.PI;
+        
+        const plane = document.getElementById('plane');
+        plane.setAttribute('x', planeX);
+        plane.setAttribute('y', planeY);
+        plane.setAttribute('transform', `rotate(${angle} ${planeX} ${planeY})`);
     }
 
     togglePause() {
@@ -813,7 +1450,6 @@ class FocusFlight {
         clearInterval(this.session.timer);
         
         if (completed) {
-            // Award miles
             const baseMiles = this.session.duration;
             const multiplier = this.getSeatMultiplier(this.session.seatClass);
             const earnedMiles = Math.round(baseMiles * multiplier);
@@ -828,35 +1464,24 @@ class FocusFlight {
             this.renderAchievements();
             this.renderCities();
             
-            // Show completion message
             alert(`🎉 Flight Completed!\n\nYou earned ${earnedMiles} miles!\nTotal Miles: ${this.data.totalMiles}`);
         }
         
-        // Reset UI
-        document.getElementById('bookingSection').classList.remove('hidden');
-        document.getElementById('flightSection').classList.add('hidden');
+        // Reset to booking
+        document.getElementById('bookingSteps').classList.remove('hidden');
+        document.getElementById('flightTracker').classList.add('hidden');
+        this.goToStep(1);
         
-        // Reset plane position
-        document.getElementById('plane').setAttribute('x', '100');
-        document.getElementById('progressBar').style.width = '0%';
-        
+        // Reset selections
+        this.session.selectedRoute = null;
         this.session.active = false;
     }
 
     checkAchievements() {
         this.achievements.forEach(achievement => {
             if (!this.data.achievements.includes(achievement.id)) {
-                let qualified = false;
-                
-                if (achievement.id === 'first-flight' || achievement.id === 'frequent-flyer' || 
-                    achievement.id === 'globe-trotter') {
-                    qualified = this.data.flightsCompleted >= achievement.requirement;
-                } else if (achievement.id === 'mile-high-club' || achievement.id === 'sky-master' || 
-                           achievement.id === 'aviation-legend') {
-                    qualified = this.data.totalMiles >= achievement.requirement;
-                }
-                
-                if (qualified) {
+                const value = achievement.type === 'flights' ? this.data.flightsCompleted : this.data.totalMiles;
+                if (value >= achievement.requirement) {
                     this.data.achievements.push(achievement.id);
                     this.showAchievementNotification(achievement);
                 }
@@ -865,38 +1490,21 @@ class FocusFlight {
     }
 
     showAchievementNotification(achievement) {
-        alert(`🏆 Achievement Unlocked!\n\n${achievement.icon} ${achievement.name}\n${achievement.desc}`);
+        setTimeout(() => {
+            alert(`🏆 Achievement Unlocked!\n\n${achievement.icon} ${achievement.name}\n${achievement.desc}`);
+        }, 500);
     }
 
     checkUnlocks() {
-        // Check seat class unlocks
+        // Check seat unlocks
         if (this.data.totalMiles >= 500 && !this.data.unlockedSeats.includes('first')) {
             this.data.unlockedSeats.push('first');
-            const firstClassRadio = document.getElementById('first');
-            firstClassRadio.disabled = false;
-            firstClassRadio.parentElement.classList.remove('locked');
         }
         
         // Check city unlocks
         this.cities.forEach(city => {
             if (this.data.totalMiles >= city.requirement && !this.data.unlockedCities.includes(city.id)) {
                 this.data.unlockedCities.push(city.id);
-            }
-        });
-        
-        // Update route options
-        const routeSelect = document.getElementById('route');
-        Array.from(routeSelect.options).forEach(option => {
-            const routeId = option.value;
-            if (routeId && this.routes[routeId]) {
-                const route = this.routes[routeId];
-                const fromUnlocked = this.data.unlockedCities.includes(route.fromCity);
-                const toUnlocked = this.data.unlockedCities.includes(route.toCity);
-                
-                if (fromUnlocked && toUnlocked) {
-                    option.disabled = false;
-                    option.textContent = `${route.from} → ${route.to}`;
-                }
             }
         });
     }
@@ -910,20 +1518,14 @@ class FocusFlight {
             const card = document.createElement('div');
             card.className = `achievement-card ${unlocked ? 'unlocked' : 'locked'}`;
             
-            let requirementText = '';
-            if (!unlocked) {
-                if (achievement.id.includes('flight')) {
-                    requirementText = `<div class="achievement-desc">${this.data.flightsCompleted}/${achievement.requirement} flights</div>`;
-                } else {
-                    requirementText = `<div class="achievement-desc">${this.data.totalMiles}/${achievement.requirement} miles</div>`;
-                }
-            }
+            const value = achievement.type === 'flights' ? this.data.flightsCompleted : this.data.totalMiles;
+            const progress = unlocked ? '' : `<div class="achievement-desc">${value}/${achievement.requirement}</div>`;
             
             card.innerHTML = `
                 <div class="achievement-icon">${achievement.icon}</div>
                 <div class="achievement-name">${achievement.name}</div>
                 <div class="achievement-desc">${achievement.desc}</div>
-                ${requirementText}
+                ${progress}
             `;
             
             grid.appendChild(card);
@@ -950,7 +1552,7 @@ class FocusFlight {
     }
 }
 
-// Initialize the app when DOM is loaded
+// Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
     new FocusFlight();
 });
