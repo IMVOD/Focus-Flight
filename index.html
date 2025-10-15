@@ -4,7 +4,460 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FocusFlight - Your Focus Journey</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+.header {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 2em;
+    color: #667eea;
+}
+
+.stats {
+    display: flex;
+    gap: 30px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.stat-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #667eea;
+}
+
+/* Main Content */
+.main-content {
+    display: grid;
+    gap: 20px;
+}
+
+/* Booking Section */
+.booking-section {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.booking-section h2 {
+    margin-bottom: 20px;
+    color: #667eea;
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-control {
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Seat Classes */
+.seat-classes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.seat-class input[type="radio"] {
+    display: none;
+}
+
+.seat-class label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 3px solid #e0e0e0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: #f9f9f9;
+}
+
+.seat-class input[type="radio"]:checked + label {
+    border-color: #667eea;
+    background: #f0f4ff;
+    transform: scale(1.05);
+}
+
+.seat-class label.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.seat-icon {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.seat-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.seat-multiplier {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.locked-badge {
+    font-size: 0.8em;
+    color: #ff5722;
+    margin-top: 5px;
+}
+
+/* Buttons */
+.btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: #ffc107;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #ffb300;
+}
+
+.btn-danger {
+    background: #f44336;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #d32f2f;
+}
+
+/* Flight Section */
+.flight-section {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.flight-section.hidden {
+    display: none;
+}
+
+.flight-info {
+    margin-bottom: 20px;
+}
+
+.flight-info h2 {
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.flight-details {
+    display: flex;
+    gap: 30px;
+    font-size: 1.1em;
+}
+
+.detail-item {
+    color: #666;
+}
+
+/* Map Container */
+.map-container {
+    background: #e3f2fd;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+#flightMap {
+    width: 100%;
+    height: auto;
+}
+
+.city-label {
+    font-size: 14px;
+    fill: #333;
+}
+
+.plane-icon {
+    transition: all 0.5s linear;
+}
+
+/* Timer */
+.timer-container {
+    margin-bottom: 20px;
+}
+
+.timer {
+    font-size: 4em;
+    font-weight: bold;
+    text-align: center;
+    color: #667eea;
+    margin-bottom: 15px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 30px;
+    background: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50 0%, #8BC34A 100%);
+    width: 0%;
+    transition: width 0.5s linear;
+    border-radius: 15px;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* Achievements Section */
+.achievements-section {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.achievements-section h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.achievement-card {
+    background: #f9f9f9;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.achievement-card.unlocked {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    border-color: #ffc107;
+}
+
+.achievement-card.locked {
+    opacity: 0.5;
+}
+
+.achievement-icon {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.achievement-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.achievement-desc {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Cities Section */
+.cities-section {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cities-section h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.cities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.city-card {
+    background: #f9f9f9;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.city-card.unlocked {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-color: #2196F3;
+}
+
+.city-card.locked {
+    opacity: 0.5;
+}
+
+.city-icon {
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.city-name {
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.city-requirement {
+    font-size: 0.8em;
+    color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .seat-classes {
+        grid-template-columns: 1fr;
+    }
+
+    .timer {
+        font-size: 3em;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in {
+    animation: slideIn 0.5s ease-out;
+}
+    </style>
 </head>
 <body>
     <div class="container">
@@ -160,6 +613,347 @@
         </main>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+// FocusFlight Application
+class FocusFlight {
+    constructor() {
+        this.data = {
+            totalMiles: 0,
+            flightsCompleted: 0,
+            achievements: [],
+            unlockedCities: ['newyork', 'boston', 'sanfrancisco', 'losangeles', 'chicago', 'detroit'],
+            unlockedSeats: ['economy', 'business']
+        };
+        
+        this.session = {
+            active: false,
+            paused: false,
+            duration: 25,
+            elapsed: 0,
+            seatClass: 'economy',
+            route: 'newyork-boston',
+            timer: null,
+            startTime: null
+        };
+
+        this.achievements = [
+            { id: 'first-flight', name: 'First Flight', desc: 'Complete your first focus session', icon: '🎯', requirement: 1 },
+            { id: 'frequent-flyer', name: 'Frequent Flyer', desc: 'Complete 10 flights', icon: '✈️', requirement: 10 },
+            { id: 'globe-trotter', name: 'Globe Trotter', desc: 'Complete 25 flights', icon: '🌍', requirement: 25 },
+            { id: 'mile-high-club', name: 'Mile High Club', desc: 'Earn 100 miles', icon: '💯', requirement: 100 },
+            { id: 'sky-master', name: 'Sky Master', desc: 'Earn 500 miles', icon: '⭐', requirement: 500 },
+            { id: 'aviation-legend', name: 'Aviation Legend', desc: 'Earn 1000 miles', icon: '👑', requirement: 1000 }
+        ];
+
+        this.cities = [
+            { id: 'newyork', name: 'New York', icon: '🗽', requirement: 0 },
+            { id: 'boston', name: 'Boston', icon: '🏛️', requirement: 0 },
+            { id: 'sanfrancisco', name: 'San Francisco', icon: '🌉', requirement: 0 },
+            { id: 'losangeles', name: 'Los Angeles', icon: '🌴', requirement: 0 },
+            { id: 'chicago', name: 'Chicago', icon: '🏙️', requirement: 0 },
+            { id: 'detroit', name: 'Detroit', icon: '🚗', requirement: 0 },
+            { id: 'miami', name: 'Miami', icon: '🏖️', requirement: 250 },
+            { id: 'orlando', name: 'Orlando', icon: '🎢', requirement: 250 },
+            { id: 'seattle', name: 'Seattle', icon: '☕', requirement: 500 },
+            { id: 'portland', name: 'Portland', icon: '🌲', requirement: 500 },
+            { id: 'london', name: 'London', icon: '🇬🇧', requirement: 1000 },
+            { id: 'paris', name: 'Paris', icon: '🇫🇷', requirement: 1000 }
+        ];
+
+        this.routes = {
+            'newyork-boston': { from: 'New York', to: 'Boston', fromCity: 'newyork', toCity: 'boston' },
+            'sanfrancisco-losangeles': { from: 'San Francisco', to: 'Los Angeles', fromCity: 'sanfrancisco', toCity: 'losangeles' },
+            'chicago-detroit': { from: 'Chicago', to: 'Detroit', fromCity: 'chicago', toCity: 'detroit' },
+            'miami-orlando': { from: 'Miami', to: 'Orlando', fromCity: 'miami', toCity: 'orlando' },
+            'seattle-portland': { from: 'Seattle', to: 'Portland', fromCity: 'seattle', toCity: 'portland' },
+            'newyork-london': { from: 'New York', to: 'London', fromCity: 'newyork', toCity: 'london' }
+        };
+
+        this.init();
+    }
+
+    init() {
+        this.loadData();
+        this.updateUI();
+        this.renderAchievements();
+        this.renderCities();
+        this.attachEventListeners();
+        this.checkUnlocks();
+    }
+
+    loadData() {
+        const saved = localStorage.getItem('focusFlight');
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            this.data = { ...this.data, ...parsed };
+        }
+    }
+
+    saveData() {
+        localStorage.setItem('focusFlight', JSON.stringify(this.data));
+    }
+
+    updateUI() {
+        document.getElementById('totalMiles').textContent = this.data.totalMiles;
+        document.getElementById('flightsCompleted').textContent = this.data.flightsCompleted;
+    }
+
+    attachEventListeners() {
+        document.getElementById('startFlight').addEventListener('click', () => this.startFlight());
+        document.getElementById('pauseFlight').addEventListener('click', () => this.togglePause());
+        document.getElementById('cancelFlight').addEventListener('click', () => this.cancelFlight());
+        
+        // Update miles calculation when duration or seat class changes
+        document.getElementById('duration').addEventListener('change', () => this.updateMilesPreview());
+        document.querySelectorAll('input[name="seatClass"]').forEach(radio => {
+            radio.addEventListener('change', () => this.updateMilesPreview());
+        });
+    }
+
+    updateMilesPreview() {
+        // This could show estimated miles in the UI
+    }
+
+    getSeatMultiplier(seatClass) {
+        const multipliers = {
+            'economy': 1,
+            'business': 1.5,
+            'first': 2
+        };
+        return multipliers[seatClass] || 1;
+    }
+
+    startFlight() {
+        const duration = parseInt(document.getElementById('duration').value);
+        const seatClass = document.querySelector('input[name="seatClass"]:checked').value;
+        const route = document.getElementById('route').value;
+
+        this.session = {
+            active: true,
+            paused: false,
+            duration: duration,
+            elapsed: 0,
+            seatClass: seatClass,
+            route: route,
+            timer: null,
+            startTime: Date.now()
+        };
+
+        // Update UI
+        document.getElementById('bookingSection').classList.add('hidden');
+        document.getElementById('flightSection').classList.remove('hidden');
+
+        const routeInfo = this.routes[route];
+        document.getElementById('flightRoute').textContent = `${routeInfo.from} → ${routeInfo.to}`;
+        document.getElementById('currentClass').textContent = seatClass.charAt(0).toUpperCase() + seatClass.slice(1);
+        
+        const baseMiles = duration;
+        const multiplier = this.getSeatMultiplier(seatClass);
+        const totalMiles = Math.round(baseMiles * multiplier);
+        document.getElementById('milesToEarn').textContent = totalMiles;
+
+        // Update map labels
+        document.querySelector('#flightMap text:nth-of-type(1)').textContent = routeInfo.from;
+        document.querySelector('#flightMap text:nth-of-type(2)').textContent = routeInfo.to;
+
+        // Start the timer
+        this.runTimer();
+    }
+
+    runTimer() {
+        const updateInterval = 100; // Update every 100ms for smooth animation
+        
+        this.session.timer = setInterval(() => {
+            if (!this.session.paused) {
+                this.session.elapsed += updateInterval / 1000;
+                
+                const remainingSeconds = Math.max(0, this.session.duration * 60 - this.session.elapsed);
+                const minutes = Math.floor(remainingSeconds / 60);
+                const seconds = Math.floor(remainingSeconds % 60);
+                
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Update progress bar
+                const progress = (this.session.elapsed / (this.session.duration * 60)) * 100;
+                document.getElementById('progressBar').style.width = `${Math.min(progress, 100)}%`;
+                
+                // Update plane position
+                const planeProgress = Math.min(progress / 100, 1);
+                const startX = 100;
+                const endX = 700;
+                const planeX = startX + (endX - startX) * planeProgress;
+                document.getElementById('plane').setAttribute('x', planeX);
+                
+                // Check if completed
+                if (remainingSeconds <= 0) {
+                    this.completeFlight();
+                }
+            }
+        }, updateInterval);
+    }
+
+    togglePause() {
+        this.session.paused = !this.session.paused;
+        const btn = document.getElementById('pauseFlight');
+        btn.textContent = this.session.paused ? '▶️ Resume' : '⏸️ Pause';
+    }
+
+    cancelFlight() {
+        if (confirm('Are you sure you want to cancel this flight? You will not earn any miles.')) {
+            this.endFlight(false);
+        }
+    }
+
+    completeFlight() {
+        this.endFlight(true);
+    }
+
+    endFlight(completed) {
+        clearInterval(this.session.timer);
+        
+        if (completed) {
+            // Award miles
+            const baseMiles = this.session.duration;
+            const multiplier = this.getSeatMultiplier(this.session.seatClass);
+            const earnedMiles = Math.round(baseMiles * multiplier);
+            
+            this.data.totalMiles += earnedMiles;
+            this.data.flightsCompleted += 1;
+            
+            this.saveData();
+            this.updateUI();
+            this.checkAchievements();
+            this.checkUnlocks();
+            this.renderAchievements();
+            this.renderCities();
+            
+            // Show completion message
+            alert(`🎉 Flight Completed!\n\nYou earned ${earnedMiles} miles!\nTotal Miles: ${this.data.totalMiles}`);
+        }
+        
+        // Reset UI
+        document.getElementById('bookingSection').classList.remove('hidden');
+        document.getElementById('flightSection').classList.add('hidden');
+        
+        // Reset plane position
+        document.getElementById('plane').setAttribute('x', '100');
+        document.getElementById('progressBar').style.width = '0%';
+        
+        this.session.active = false;
+    }
+
+    checkAchievements() {
+        this.achievements.forEach(achievement => {
+            if (!this.data.achievements.includes(achievement.id)) {
+                let qualified = false;
+                
+                if (achievement.id === 'first-flight' || achievement.id === 'frequent-flyer' || 
+                    achievement.id === 'globe-trotter') {
+                    qualified = this.data.flightsCompleted >= achievement.requirement;
+                } else if (achievement.id === 'mile-high-club' || achievement.id === 'sky-master' || 
+                           achievement.id === 'aviation-legend') {
+                    qualified = this.data.totalMiles >= achievement.requirement;
+                }
+                
+                if (qualified) {
+                    this.data.achievements.push(achievement.id);
+                    this.showAchievementNotification(achievement);
+                }
+            }
+        });
+    }
+
+    showAchievementNotification(achievement) {
+        alert(`🏆 Achievement Unlocked!\n\n${achievement.icon} ${achievement.name}\n${achievement.desc}`);
+    }
+
+    checkUnlocks() {
+        // Check seat class unlocks
+        if (this.data.totalMiles >= 500 && !this.data.unlockedSeats.includes('first')) {
+            this.data.unlockedSeats.push('first');
+            const firstClassRadio = document.getElementById('first');
+            firstClassRadio.disabled = false;
+            firstClassRadio.parentElement.classList.remove('locked');
+        }
+        
+        // Check city unlocks
+        this.cities.forEach(city => {
+            if (this.data.totalMiles >= city.requirement && !this.data.unlockedCities.includes(city.id)) {
+                this.data.unlockedCities.push(city.id);
+            }
+        });
+        
+        // Update route options
+        const routeSelect = document.getElementById('route');
+        Array.from(routeSelect.options).forEach(option => {
+            const routeId = option.value;
+            if (routeId && this.routes[routeId]) {
+                const route = this.routes[routeId];
+                const fromUnlocked = this.data.unlockedCities.includes(route.fromCity);
+                const toUnlocked = this.data.unlockedCities.includes(route.toCity);
+                
+                if (fromUnlocked && toUnlocked) {
+                    option.disabled = false;
+                    option.textContent = `${route.from} → ${route.to}`;
+                }
+            }
+        });
+    }
+
+    renderAchievements() {
+        const grid = document.getElementById('achievementsGrid');
+        grid.innerHTML = '';
+        
+        this.achievements.forEach(achievement => {
+            const unlocked = this.data.achievements.includes(achievement.id);
+            const card = document.createElement('div');
+            card.className = `achievement-card ${unlocked ? 'unlocked' : 'locked'}`;
+            
+            let requirementText = '';
+            if (!unlocked) {
+                if (achievement.id.includes('flight')) {
+                    requirementText = `<div class="achievement-desc">${this.data.flightsCompleted}/${achievement.requirement} flights</div>`;
+                } else {
+                    requirementText = `<div class="achievement-desc">${this.data.totalMiles}/${achievement.requirement} miles</div>`;
+                }
+            }
+            
+            card.innerHTML = `
+                <div class="achievement-icon">${achievement.icon}</div>
+                <div class="achievement-name">${achievement.name}</div>
+                <div class="achievement-desc">${achievement.desc}</div>
+                ${requirementText}
+            `;
+            
+            grid.appendChild(card);
+        });
+    }
+
+    renderCities() {
+        const grid = document.getElementById('citiesGrid');
+        grid.innerHTML = '';
+        
+        this.cities.forEach(city => {
+            const unlocked = this.data.unlockedCities.includes(city.id);
+            const card = document.createElement('div');
+            card.className = `city-card ${unlocked ? 'unlocked' : 'locked'}`;
+            
+            card.innerHTML = `
+                <div class="city-icon">${city.icon}</div>
+                <div class="city-name">${city.name}</div>
+                ${!unlocked ? `<div class="city-requirement">🔒 ${city.requirement} miles</div>` : ''}
+            `;
+            
+            grid.appendChild(card);
+        });
+    }
+}
+
+// Initialize the app when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new FocusFlight();
+});
+    </script>
 </body>
 </html>
